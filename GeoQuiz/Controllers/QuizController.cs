@@ -14,15 +14,16 @@ namespace GeoQuiz.Controllers
         // GET: Quiz
         public ViewResult Index()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult Index(byte dummy = 0)
+        {
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
             Difficulty difficulty = Difficulty.Medium;
 
-            return Huindex(continents, allowedNonSovereignIds, difficulty);
-        }
-
-        public ViewResult Huindex(List<string> continents, List<int> allowedNonSovereignIds, Difficulty difficulty)
-        {
             GeoDBDataContext db = new GeoDBDataContext();
 
             List<Country> countries = db.Countries
@@ -32,13 +33,13 @@ namespace GeoQuiz.Controllers
                 .ToList();
 
             List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
-            foreach(Country c in countries)
+            foreach (Country c in countries)
             {
                 string question = c.Name;
                 string answer = c.Id.ToString();
                 string[] distractors = db.FlagNeighbours
                     .Where(fn => fn.CountryId1 == c.Id &&
-                                 continents.Contains(fn.Country1.Continent) && 
+                                 continents.Contains(fn.Country1.Continent) &&
                                 (fn.Country1.IsSovereign || allowedNonSovereignIds.Contains(fn.CountryId2)))
                     .OrderBy(x => x.Distance)
                     .Take((int)difficulty)
@@ -50,15 +51,15 @@ namespace GeoQuiz.Controllers
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));
             }
 
-            Session["Questions"] = questions;   // не должно быть изменения в GET
+            Session["Questions"] = questions;
             ViewBag.QuestionIndex = 0;
-            return View(questions[0].Question);
+
+            return View("List", questions[0].Question);
         }
 
         [HttpPost]
-        public ViewResult Index(string answer, int questionIndex = 0)
+        public ViewResult List(List<QuestionAnswerPair> questions, string answer, int questionIndex = 0)
         {
-            List<QuestionAnswerPair> questions = (List<QuestionAnswerPair>)Session["Questions"];
             if (questions.Count - 1 > questionIndex)
             {
                 ViewBag.QuestionIndex = questionIndex + 1;

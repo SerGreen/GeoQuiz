@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GeoQuiz.Infrastructure;
+using GeoQuiz.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +15,8 @@ namespace GeoQuiz
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            ModelBinders.Binders.Add(typeof(List<QuestionAnswerPair>), new QuestionsModelBinder());
         }
     }
 }
