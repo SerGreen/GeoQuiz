@@ -1,4 +1,4 @@
-﻿using GeoQuiz.Infrastructure;
+﻿using GeoQuiz.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

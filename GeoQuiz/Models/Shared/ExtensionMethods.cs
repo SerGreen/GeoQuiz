@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace GeoQuiz.Infrastructure
+namespace GeoQuiz.Models.Shared
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<T> Shuffle<T>(this IList<T> list)
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> list)
         {
             IList<T> copy = new List<T>(list);
             Random rnd = new Random();
