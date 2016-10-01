@@ -11,6 +11,8 @@ namespace GeoQuiz.Controllers
 {
     public class QuizController : Controller
     {
+        GeoDBDataContext db = new GeoDBDataContext();
+
         // GET: Quiz
         public ViewResult Index()
         {
@@ -23,8 +25,6 @@ namespace GeoQuiz.Controllers
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
             Difficulty difficulty = Difficulty.Medium;
-
-            GeoDBDataContext db = new GeoDBDataContext();
 
             List<Country> countries = db.Countries
                 // select country if it is on allowed continent and if it is either sovereign or one of the allowed non-sovereigns
@@ -52,21 +52,21 @@ namespace GeoQuiz.Controllers
             }
 
             Session["Questions"] = questions;
-            ViewBag.QuestionIndex = 0;
-
-            return View("List", questions[0].Question);
+            return View("List", new QuestionViewModel() { Index = 0, Question = questions[0].Question });
         }
 
         [HttpPost]
-        public ViewResult List(List<QuestionAnswerPair> questions, string answer, int questionIndex = 0)
+        public ViewResult List(List<QuestionAnswerPair> questions, string answer, int questionIndex)
         {
-            if (questions.Count - 1 > questionIndex)
+            if (answer != questions[questionIndex].Answer)
+                TempData["Mistake"] = $"Wrong! It was the flag of {db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name}.";
+
+            if (questions.Count - 1 > questionIndex++)
             {
-                ViewBag.QuestionIndex = questionIndex + 1;
-                return View(questions[questionIndex + 1].Question);
+                return View(new QuestionViewModel() { Index = questionIndex, Question = questions[questionIndex].Question });
             }
             else
-                return View();
+                return View("Index");
         }
     }
 }

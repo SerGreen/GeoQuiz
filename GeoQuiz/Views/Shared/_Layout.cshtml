@@ -26,6 +26,12 @@
         </div>
     </div>
 
+    <div>
+        @if (TempData["Mistake"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Mistake"]</div>
+        }
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
