@@ -20,7 +20,7 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpPost]
-        public ViewResult Index(byte dummy = 0)
+        public ViewResult Index(int amountOfDistractors = 3)
         {
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
@@ -32,11 +32,16 @@ namespace GeoQuiz.Controllers
                 .Shuffle()
                 .ToList();
 
+            // Assemble questions for each country
             List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
             foreach (Country c in countries)
             {
                 string question = c.Name;
                 string answer = c.Id.ToString();
+                // Select distractors: 
+                // 1. Select all similar flags and order by similarity
+                // 2. Take N most similar and randomize (N value is smaller for greater difficulties => the more similar distractors are selected)
+                // 3. Select M entries, where M is number of distraction options
                 string[] distractors = db.FlagNeighbours
                     .Where(fn => fn.CountryId1 == c.Id &&
                                  continents.Contains(fn.Country1.Continent) &&
@@ -44,7 +49,7 @@ namespace GeoQuiz.Controllers
                     .OrderBy(x => x.Distance)
                     .Take((int)difficulty)
                     .Shuffle()
-                    .Take(3)
+                    .Take(amountOfDistractors)
                     .Select(x => x.CountryId2.ToString())
                     .ToArray();
 

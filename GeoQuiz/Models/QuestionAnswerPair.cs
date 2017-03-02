@@ -9,7 +9,7 @@ namespace GeoQuiz.Models
     public class QuestionAnswerPair
     {
         public Question Question { get; private set; }
-        public int CorrectAnswerIndex { get; private set; }
+        private int CorrectAnswerIndex { get; }
         public string Answer { get { return Question.Choices[CorrectAnswerIndex]; } }
 
         public QuestionAnswerPair(string question, string answer, string[] distractors)
@@ -21,5 +21,7 @@ namespace GeoQuiz.Models
             CorrectAnswerIndex = choices.IndexOf(answer);
             Question = new Question(question, choices.ToArray());
         }
+
+        public bool TestAnswer(string answer) => answer == Answer;
     }
 }
