@@ -14,13 +14,27 @@ namespace GeoQuiz.Controllers
         GeoDBDataContext db = new GeoDBDataContext();
 
         // GET: Quiz
+        [HttpGet]
         public ViewResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult Index(int amountOfDistractors = 3)
+        public ActionResult Index(GameMode gameMode = GameMode.FlagByCountry)
+        {
+            switch (gameMode)
+            {
+                case GameMode.FlagByCountry:
+                    return StartFlagByCountryGame();
+                case GameMode.CountryByFlag:
+                case GameMode.CapitalByCountry:
+                default:
+                    return RedirectToAction(nameof(Index));
+            }
+        }
+        
+        public ActionResult StartFlagByCountryGame(int amountOfDistractors = 3)
         {
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
