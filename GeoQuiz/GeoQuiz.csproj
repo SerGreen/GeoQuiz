@@ -384,6 +384,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\QuestionsModelBinder.cs" />
+    <Compile Include="Models\QuestionsList.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Shared\Enums.cs" />
     <Compile Include="Models\Shared\ExtensionMethods.cs" />

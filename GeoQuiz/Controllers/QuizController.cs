@@ -34,11 +34,10 @@ namespace GeoQuiz.Controllers
             }
         }
         
-        public ActionResult StartFlagByCountryGame(int amountOfDistractors = 3)
+        public ActionResult StartFlagByCountryGame(Difficulty difficulty = Difficulty.Medium, int amountOfDistractors = 3)
         {
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
-            Difficulty difficulty = Difficulty.Medium;
 
             List<Country> countries = db.Countries
                 // select country if it is on allowed continent and if it is either sovereign or one of the allowed non-sovereigns
@@ -70,7 +69,7 @@ namespace GeoQuiz.Controllers
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));
             }
 
-            Session["Questions"] = questions;
+            Session["Questions"] = new QuestionsList(questions);
             return View("List", new QuestionViewModel() { Index = 0, Question = questions[0].Question });
         }
 
@@ -78,7 +77,7 @@ namespace GeoQuiz.Controllers
         public ViewResult List(List<QuestionAnswerPair> questions, string answer, int questionIndex)
         {
             if (answer != questions[questionIndex].Answer)
-                TempData["Mistake"] = $"Wrong! It was the flag of {db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name}.";
+                TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
 
             if (questions.Count - 1 > questionIndex++)
             {

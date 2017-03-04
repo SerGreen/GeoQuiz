@@ -13,15 +13,15 @@ namespace GeoQuiz.Infrastructure
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            List<QuestionAnswerPair> questions = null;
+            QuestionsList questions = null;
             if (controllerContext.HttpContext.Session != null)
             {
-                questions = (List<QuestionAnswerPair>)controllerContext.HttpContext.Session[sessionKey];
+                questions = (QuestionsList) controllerContext.HttpContext.Session[sessionKey];
             }
             
             if (questions == null)
             {
-                questions = new List<QuestionAnswerPair>();
+                questions = new QuestionsList();
                 if (controllerContext.HttpContext.Session != null)
                 {
                     controllerContext.HttpContext.Session[sessionKey] = questions;
