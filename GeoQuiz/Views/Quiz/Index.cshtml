@@ -3,11 +3,18 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="well col-sm-offset-1 col-sm-10 text-center">
+    <h2 class="text-muted">Start new game</h2>
+    <hr />
 
-<div class="col-xs-12 text-center">
-    @using (Html.BeginForm("Index", "Quiz", null))
-    {
-        <input class="btn btn-default" type="submit", value="Begin" />
-    }
+    <div class="btn-group btn-group-lg">
+        @using (Html.BeginForm("Index", "Quiz", new { gameMode = "FlagByCountry" }))
+        {
+            <input class="btn btn-default" type="submit" , value="Begin flags" />
+        }
+        @using (Html.BeginForm("Index", "Quiz", new { gameMode = "CountryByFlag" }))
+        {
+            <input class="btn btn-default" type="submit" , value="Begin countries" />
+        }
+    </div>
 </div>

@@ -16,7 +16,7 @@ namespace GeoQuiz
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            ModelBinders.Binders.Add(typeof(List<QuestionAnswerPair>), new QuestionsModelBinder());
+            ModelBinders.Binders.Add(typeof(QuestionsList), new QuestionsModelBinder());
         }
     }
 }

@@ -34,7 +34,7 @@ namespace GeoQuiz.Controllers
             }
         }
         
-        public ActionResult StartFlagByCountryGame(Difficulty difficulty = Difficulty.Medium, int amountOfDistractors = 3)
+        private ActionResult StartFlagByCountryGame(Difficulty difficulty = Difficulty.Medium, int amountOfDistractors = 3)
         {
             List<string> continents = new List<string>() { "AU" };
             List<int> allowedNonSovereignIds = new List<int>();
@@ -69,22 +69,36 @@ namespace GeoQuiz.Controllers
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));
             }
 
-            Session["Questions"] = new QuestionsList(questions);
-            return View("List", new QuestionViewModel() { Index = 0, Question = questions[0].Question });
+            QuestionsList questionsList = new QuestionsList(questions, GameMode.FlagByCountry);
+            Session["Questions"] = questionsList;
+            return View(nameof(Quiz), GetQuestionViewModel(questionsList));
+        }
+
+        private QuestionViewModel GetQuestionViewModel(QuestionsList questions)
+        {
+            return new QuestionViewModel()
+            {
+                Index = questions.CurrentQuestionIndex,
+                TotalQuestionsCount = questions.Count,
+                CorrectAnswers = questions.CorrectAnswersCount,
+                WrongAnswers = questions.WrongAnswersCount,
+                Question = questions.CurrentQuestion,
+                GameMode = questions.GameMode
+            };
         }
 
         [HttpPost]
-        public ViewResult List(List<QuestionAnswerPair> questions, string answer, int questionIndex)
+        public ViewResult Quiz(QuestionsList questions, string answer, int questionIndex)
         {
-            if (answer != questions[questionIndex].Answer)
+            if (questions.TestAnswer(answer) == false)
                 TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
 
-            if (questions.Count - 1 > questionIndex++)
+            if (!questions.EndReached)
             {
-                return View(new QuestionViewModel() { Index = questionIndex, Question = questions[questionIndex].Question });
+                return View(GetQuestionViewModel(questions));
             }
             else
-                return View("Index");
+                return View("Results");
         }
     }
 }
