@@ -2,23 +2,22 @@
 
 @{
     ViewBag.Title = "Quiz";
-    bool mistake = TempData.Peek("Mistake") != null;
+    string mistakeText = TempData["Mistake"] as string;
 }
 
 <div class="col-xs-offset-1 col-xs-10 well">
-    <div class="navbar navbar-default">
-        <ul class="nav navbar-nav">
-            <li><a href="#">Question @Model.Index / @Model.TotalQuestionsCount</a></li>
-            <li><a href="#">Correct: @Model.CorrectAnswers</a></li>
-            <li><a href="#">Wrong: @Model.WrongAnswers</a></li>
-            <li class="pull-right @(mistake ? "" : "hidden")">
-                <div class="panel panel-danger text-center">
-                    <div class="panel-heading">
-                        @(mistake ? $"Wrong! It was flag of {(TempData["Mistake"] as string)}" : "")
-                    </div>
+    <div class="row vdivide text-center">
+            <div class="col-sm-2">Question @Model.Index / @Model.TotalQuestionsCount</div>
+            <div class="col-sm-2">Correct: @Model.CorrectAnswers</div>
+            <div class="col-sm-2">Wrong: @Model.WrongAnswers</div>
+        @if (mistakeText != null)
+        {
+            <div class="col-sm-6">
+                <div class="text-danger bg-danger img-rounded">
+                        Wrong! It was flag of @mistakeText
                 </div>
-            </li>
-        </ul>
+            </div>
+        }
     </div>
 </div>
 
