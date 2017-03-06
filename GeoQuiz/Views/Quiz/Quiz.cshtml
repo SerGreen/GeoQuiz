@@ -5,11 +5,30 @@
     string mistakeText = TempData["Mistake"] as string;
 }
 
+<script>
+    $(document).ready(function () {
+        var bar = new ProgressBar.Line(container, {
+            strokeWidth: 4,
+            easing: 'easeInOut',
+            duration: 1400,
+            color: '#aaddaa',
+            trailColor: '#ccc',
+            trailWidth: 1,
+            svgStyle: { width: '100%', height: '100%' }
+        });
+
+        bar.animate(@((float)Model.Index / Model.TotalQuestionsCount));  // Number from 0.0 to 1.0
+    });
+</script>
+
 <div class="col-xs-offset-1 col-xs-10 well">
     <div class="row vdivide text-center">
-            <div class="col-sm-2">Question @Model.Index / @Model.TotalQuestionsCount</div>
-            <div class="col-sm-2">Correct: @Model.CorrectAnswers</div>
-            <div class="col-sm-2">Wrong: @Model.WrongAnswers</div>
+        <div class="col-sm-2">
+            Question @Model.Index / @Model.TotalQuestionsCount
+            <div id="progressbar" style="width:100%; height:8px"></div>
+        </div>
+        <div class="col-sm-2">Correct: @Model.CorrectAnswers</div>
+        <div class="col-sm-2">Wrong: @Model.WrongAnswers</div>
         @if (mistakeText != null)
         {
             <div class="col-sm-6">
