@@ -10,13 +10,14 @@
         var bar = new ProgressBar.Line('#progressbar', {
             strokeWidth: 4,
             easing: 'easeInOut',
-            duration: 1400,
+            duration: 400,
             color: '#009688',
             trailColor: '#ccc',
             trailWidth: 1,
             svgStyle: { width: '100%', height: '100%' }
         });
 
+        bar.set((@Model.Index - 1) / @Model.TotalQuestionsCount);
         bar.animate(@Model.Index / @Model.TotalQuestionsCount);  // Number from 0.0 to 1.0
     });
 </script>
@@ -42,14 +43,6 @@
         </div>
         <div class="col-sm-2">Correct: @Model.CorrectAnswers</div>
         <div class="col-sm-2">Wrong: @Model.WrongAnswers</div>
-        @if (mistakeText != null)
-        {
-            <div class="col-sm-6">
-                <div class="text-danger bg-danger img-rounded">
-                        Wrong! It was flag of @mistakeText
-                </div>
-            </div>
-        }
     </div>
 </div>
 
