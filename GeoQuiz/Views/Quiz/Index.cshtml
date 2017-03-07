@@ -3,18 +3,40 @@
     ViewBag.Title = "Index";
 }
 
+<script>
+    $(document).ready(function () {
+        $('.btn-hover-highlight').hover(function () {
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-primary');
+        }, function () {
+            $(this).removeClass('btn-primary');
+            $(this).addClass('btn-default');
+        })
+    });
+</script>
+
 <div class="well col-sm-offset-1 col-sm-10 text-center">
     <h2 class="text-muted">Start new game</h2>
     <hr />
 
-    <div class="btn-group btn-group-lg">
-        @using (Html.BeginForm("Index", "Quiz", new { gameMode = "FlagByCountry" }))
-        {
-            <input class="btn btn-default" type="submit" , value="Begin flags" />
-        }
-        @using (Html.BeginForm("Index", "Quiz", new { gameMode = "CountryByFlag" }))
-        {
-            <input class="btn btn-default" type="submit" , value="Begin countries" />
-        }
+    <div class="col-sm-offset-1 col-sm-10">
+        <div class="col-sm-4">
+            @using (Html.BeginForm("Index", "Quiz", new { gameMode = "FlagByCountry" }))
+            {
+                <input class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" , value="Begin flags" />
+            }
+        </div>
+        <div class="col-sm-4">
+            @using (Html.BeginForm("Index", "Quiz", new { gameMode = "CountryByFlag" }))
+            {
+                <input class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" , value="Begin countries" />
+            }
+        </div>
+        <div class="col-sm-4">
+            @using (Html.BeginForm("Index", "Quiz", new { gameMode = "CapitalByCountry" }))
+            {
+                <input class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" , value="Begin capitals" />
+            }
+        </div>
     </div>
 </div>

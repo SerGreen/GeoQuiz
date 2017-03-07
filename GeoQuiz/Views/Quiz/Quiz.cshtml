@@ -7,17 +7,30 @@
 
 <script>
     $(document).ready(function () {
-        var bar = new ProgressBar.Line(container, {
+        var bar = new ProgressBar.Line('#progressbar', {
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 1400,
-            color: '#aaddaa',
+            color: '#009688',
             trailColor: '#ccc',
             trailWidth: 1,
             svgStyle: { width: '100%', height: '100%' }
         });
 
-        bar.animate(@((float)Model.Index / Model.TotalQuestionsCount));  // Number from 0.0 to 1.0
+        bar.animate(@Model.Index / @Model.TotalQuestionsCount);  // Number from 0.0 to 1.0
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        if (@((mistakeText != null).ToString().ToLower()))
+        {
+            var options = {
+                content: "Wrong! It was flag of @mistakeText",
+                timeout: 6000
+            }
+
+            $.snackbar(options);
+        }
     });
 </script>
 
