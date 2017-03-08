@@ -27,3 +27,16 @@ textarea {
   right: 0;
   
 }
+
+.numberCircle {
+    border-radius: 50%;
+    width: 68px;
+    font-size: 32px;
+    border: 4px solid #666;
+}
+.numberCircle span {
+    text-align: center;
+    line-height: 60px;
+    display: block;
+    color: #666;
+}

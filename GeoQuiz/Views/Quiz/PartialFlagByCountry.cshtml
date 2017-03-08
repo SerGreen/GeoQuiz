@@ -4,7 +4,7 @@
     string mistakeText = TempData["Mistake"] as string;
 }
 
-<h2 class="text-center">Select flag of @Model.Question.QuestionString</h2>
+<h2 class="text-center">Select flag of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
 <hr />
 
 @for (int i = 0; i < Model.Question.Choices.Length; i++)
