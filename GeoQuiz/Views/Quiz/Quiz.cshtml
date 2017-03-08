@@ -2,12 +2,13 @@
 
 @{
     ViewBag.Title = "Quiz";
-    string mistakeText = TempData["Mistake"] as string;
 }
 
 <script>
+    var bar;
+
     $(document).ready(function () {
-        var bar = new ProgressBar.Line('#progressbar', {
+        bar = new ProgressBar.Line('#progressbar', {
             strokeWidth: 4,
             easing: 'easeInOut',
             duration: 400,
@@ -21,44 +22,60 @@
         bar.animate(@Model.Index / @Model.TotalQuestionsCount);  // Number from 0.0 to 1.0
     });
 </script>
-<script>
-    $(document).ready(function () {
-        if (@((mistakeText != null).ToString().ToLower()))
-        {
-            var options = {
-                content: "Wrong! It was flag of @mistakeText",
-                timeout: 6000
-            }
-
-            $.snackbar(options);
-        }
-    });
-</script>
 
 <div class="col-xs-offset-1 col-xs-10 well">
     <div class="row vdivide text-center">
         <div class="col-sm-2">
-            Question @Model.Index / @Model.TotalQuestionsCount
+            Question <span id="current-question-index">@Model.Index</span> / @Model.TotalQuestionsCount
             <div id="progressbar" style="width:100%; height:8px"></div>
         </div>
-        <div class="col-sm-2">Correct: @Model.CorrectAnswers</div>
-        <div class="col-sm-2">Wrong: @Model.WrongAnswers</div>
+        <div class="col-sm-2">Correct: <span id="correct-answers">@Model.CorrectAnswers</span></div>
+        <div class="col-sm-2">Wrong: <span id="wrong-answers">@Model.WrongAnswers</span></div>
     </div>
 </div>
 
-<div class="col-xs-offset-1 col-xs-10 well">
-    <h2 class="text-center">Select flag of @Model.Question.QuestionString</h2>
-    <hr />
-
-    @for(int i=0; i<Model.Question.Choices.Length; i++)
-    {
-        <div class="col-xs-@(12/Model.Question.Choices.Length) text-center">
-            @using (Html.BeginForm("Quiz", "Quiz"))
-            {
-                <input name="questionIndex" id="questionIndex" type="hidden" value="@Model.Index" />
-                <input name="answer" id="answer" type="hidden" value="@Model.Question.Choices[i]" />
-                <input class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[i]).png" name="submit" />
-            }
-        </div>
-    }
+<div id="question-container" class="col-xs-offset-1 col-xs-10 well">
+    @Html.Partial("PartialFlagByCountry", Model)
 </div>
+<script>
+    // AJAX submit answer function, it returns partial view with new question HTML
+    function submitAnswerAjax(questionIndex, answer) {
+        var data = {
+            questionIndex: questionIndex,
+            answer: answer
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: data,
+            url: '@Url.Action("Quiz", "Quiz")',
+            success: function (result) {
+                // Display new question
+                $("#question-container").html(result);
+
+                // jQuery can't find anything if result is not inside <div>
+                result = '<div>' + result + '</div>';
+
+                // Update progress bar and counters
+                var current = $('#questionIndex', result).text();
+                var correct = $('#correctAnswers', result).text();
+                var wrong = $('#wrongAnswers', result).text();
+
+                bar.animate(current / @Model.TotalQuestionsCount);
+                $('#current-question-index').text(current);
+                $('#correct-answers').text(correct);
+                $('#wrong-answers').text(wrong);
+
+                // If there was mistake, div with id="mistake" is generated
+                if ($('#mistake', result).length) {
+                    // Display snackbar
+                    var options = {
+                        content: $('#mistake', result).text(),
+                        timeout: 5000
+                    }
+                    $.snackbar(options);
+                }
+            }
+        });
+    }
+</script>

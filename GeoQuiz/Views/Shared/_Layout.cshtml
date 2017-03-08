@@ -6,8 +6,10 @@
     <title>@ViewBag.Title</title>
     <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/bootstrap", "~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/javascript")
+    @Scripts.RenderFormat(@"<script async src=""{0}""></script>", "~/bundles/bootstrap")
 </head>
 <body>
     <script>$.material.init();</script>
@@ -36,8 +38,5 @@
     <footer class="text-center">
         <p>&copy; @DateTime.Now.Year - SerGreen</p>
     </footer>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

@@ -88,14 +88,17 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpPost]
-        public ViewResult Quiz(QuestionsList questions, string answer, int questionIndex)
+        public ActionResult Quiz(QuestionsList questions, string answer, int questionIndex)
         {
             if (questions.TestAnswer(answer) == false)
                 TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
 
             if (!questions.EndReached)
             {
-                return View(GetQuestionViewModel(questions));
+                if (!Request.IsAjaxRequest())
+                    return View(GetQuestionViewModel(questions));
+                else
+                    return PartialView("PartialFlagByCountry", GetQuestionViewModel(questions));
             }
             else
                 return View("Results");

@@ -1,0 +1,23 @@
+﻿@model GeoQuiz.Models.QuestionViewModel
+
+@{
+    string mistakeText = TempData["Mistake"] as string;
+}
+
+<h2 class="text-center">Select flag of @Model.Question.QuestionString</h2>
+<hr />
+
+@for (int i = 0; i < Model.Question.Choices.Length; i++)
+{
+    <div class="col-xs-@(12/Model.Question.Choices.Length) text-center">
+        <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[i])" class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[i]).png" name="submit" />
+    </div>
+}
+
+<div hidden id="questionIndex">@Model.Index</div>
+<div hidden id="correctAnswers">@Model.CorrectAnswers</div>
+<div hidden id="wrongAnswers">@Model.WrongAnswers</div>
+@if (mistakeText != null)
+{
+    <div hidden id="mistake">Wrong! It was flag of @mistakeText</div>
+}
