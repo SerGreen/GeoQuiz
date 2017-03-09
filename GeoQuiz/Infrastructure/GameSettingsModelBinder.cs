@@ -7,28 +7,28 @@ using System.Web.Mvc;
 
 namespace GeoQuiz.Infrastructure
 {
-    public class QuestionsModelBinder : IModelBinder
+    public class GameSettingsModelBinder : IModelBinder
     {
-        private const string sessionKey = "Questions";
+        private const string sessionKey = "Settings";
 
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            QuestionsList questions = null;
+            GameSettings settings = null;
             if (controllerContext.HttpContext.Session != null)
             {
-                questions = controllerContext.HttpContext.Session[sessionKey] as QuestionsList;
+                settings = controllerContext.HttpContext.Session[sessionKey] as GameSettings;
             }
-            
-            if (questions == null)
+
+            if (settings == null)
             {
-                questions = new QuestionsList();
+                settings = new GameSettings();
                 if (controllerContext.HttpContext.Session != null)
                 {
-                    controllerContext.HttpContext.Session[sessionKey] = questions;
+                    controllerContext.HttpContext.Session[sessionKey] = settings;
                 }
             }
 
-            return questions;
+            return settings;
         }
     }
 }

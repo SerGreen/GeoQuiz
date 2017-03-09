@@ -19,6 +19,7 @@ namespace GeoQuiz
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ModelBinders.Binders.Add(typeof(QuestionsList), new QuestionsModelBinder());
+            ModelBinders.Binders.Add(typeof(GameSettings), new GameSettingsModelBinder());
         }
     }
 }

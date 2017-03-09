@@ -6,7 +6,7 @@
     if (mistake != null)
     {
         mistakeText = mistake == "Timeout"
-            ? $"Run out of time!"
+            ? $"You ran out of time!"
             : $"Wrong! It was flag of {mistake}";
     }
 
@@ -37,6 +37,8 @@
 <div hidden id="questionIndex">@Model.Index</div>
 <div hidden id="correctAnswers">@Model.CorrectAnswers</div>
 <div hidden id="wrongAnswers">@Model.WrongAnswers</div>
+<div hidden id="correctStreak">@Model.CorrectStreak</div>
+<div hidden id="reward">@Model.PointsReward</div>
 @if (mistakeText != null)
 {
     <div hidden id="mistake">@mistakeText</div>

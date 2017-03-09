@@ -418,7 +418,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\GameSettingsModelBinder.cs" />
     <Compile Include="Infrastructure\QuestionsModelBinder.cs" />
+    <Compile Include="Models\GameSettings.cs" />
     <Compile Include="Models\QuestionsList.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Shared\Enums.cs" />

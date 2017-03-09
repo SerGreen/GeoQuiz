@@ -32,7 +32,7 @@
             color: '#666',
             strokeWidth: 6,
             trailWidth: 6,
-            duration: 10000,
+            duration: @(Model.TimeLimit * 1000),
             text: {
                 className: 'timer-text',
                 autoStyleContainer: false
@@ -43,16 +43,20 @@
             step: function(state, circle) {
                 circle.path.setAttribute('stroke', state.color);
 
-                var value = Math.round(circle.value() * 10);
+                var value = Math.round(circle.value() * @Model.TimeLimit);
                 circle.setText(value);
                 circle.text.style.color = state.color;
             }
         });
 
         timer.set(1.0)
-        timer.animate(0.0, null, function () {
-            submitAnswerAjax(@Model.Index, null);
-        });
+        
+        if(@Model.TimeLimit == 0)
+            $(timer.text).text('∞');
+        else
+            timer.animate(0.0, null, function () {
+                submitAnswerAjax(@Model.Index, null);
+            });
     });
 </script>
 
@@ -82,27 +86,49 @@
 </div>
 
 <!-- RIGHT WELL -->
-<div class="col-sm-offset-1 col-sm-2 well same-height">
-    <div class="row text-center">
+<div class="col-sm-offset-1 col-sm-2 well same-height text-center">
+    <div class="row">
         <div id="timer" style="width:68px; height:68px; position:relative; margin:auto"></div>
         Time left
+    </div>
+    <hr />
+    <div class="row" style="position:initial">
+        <div id="reward-tag">+<span>@Model.PointsReward</span></div>
+        <div id="score">@Model.Score</div>
+        Score
+    </div>
+    <hr />
+    <div class="row">
+        <div id="streak" style="font-size:0px">
+            ×<span>0</span>
+            <div>Streak</div>
+        </div>
     </div>
 </div>
 
 <!-- Script that sets same height to wells -->
 <script>
-    var max = 0;
-    // Getting the greatest height
-    $('.same-height').each(function () {
-        max = ($(this).height() > max) ? $(this).height() : max;
+    $(document).ready(function() {
+        var max = 0;
+        // Getting the greatest height
+        $('.same-height').each(function () {
+            max = ($(this).height() > max) ? $(this).height() : max;
+        });
+        // Applying the greatest height to each element
+        $('.same-height').height(max);
     });
-    // Applying the greatest height to each element
-    $('.same-height').height(max);
 </script>
 
 <!-- AJAX submit answer function. It is used by Partial Views in Middle Well. It returns partial view with new question's HTML code. -->
 <script>
     function submitAnswerAjax(questionIndex, answer) {
+        // Stop timer
+        timer.stop();
+
+        // Get potential score points reward value
+        var reward = $('#reward').text();
+
+        // Send request
         var data = {
             questionIndex: questionIndex,
             answer: answer
@@ -123,17 +149,24 @@
                 var current = $('#questionIndex', result).text();
                 var correct = $('#correctAnswers', result).text();
                 var wrong = $('#wrongAnswers', result).text();
+                var streak = $('#correctStreak', result).text();
 
                 bar.animate((parseInt(current) + 1) / @Model.TotalQuestionsCount);
                 $('#current-question-index').text(parseInt(current) + 1);
                 $('#correct-answers').text(correct);
                 $('#wrong-answers').text(wrong);
 
+                $('#streak').find('span').text(streak);
+                $('#reward-tag').find('span').text(reward);
+
                 // If there was mistake, div with id="mistake" is generated
                 if ($('#mistake', result).length) {
                     // Make number of wrong answers jump
                     $('#wrong-answers').css('font-size', '42px');
                     setTimeout(function () { $('#wrong-answers').css('font-size', ''); }, 150);
+
+                    // Hide streak counter
+                    $('#streak').css('font-size', '0px');
 
                     // Display snackbar
                     var options = {
@@ -143,16 +176,59 @@
                     $.snackbar(options);
                 }
                 else {
-                    // Make number of correct answers jump
+                    // Make number of correct answers and streak counter jump
                     $('#correct-answers').css('font-size', '42px');
                     setTimeout(function () { $('#correct-answers').css('font-size', ''); }, 150);
+
+                    if(streak > 1)
+                    {
+                        $('#streak').css('font-size', '48px');
+                        setTimeout(function () { $('#streak').css('font-size', ''); }, 150);
+                    }
+
+                    // Add points to score
+                    animateScore(parseInt(reward));
                 }
 
                 // Reset timer
-                timer.set(1.0);
-                timer.animate(0.0, null, function () {
-                    submitAnswerAjax(@Model.Index, null);
-                });
+                if(@Model.TimeLimit > 0)
+                {
+                    timer.set(1.0);
+                    timer.animate(0.0, null, function () {
+                        submitAnswerAjax(@Model.Index, null);
+                    });
+                }
+            }
+        });
+    }
+</script>
+
+<!-- Score animation script -->
+<script>
+    var score = parseInt($('#score').text());
+
+    function animateScore(x){
+        $({score: 0}).animate({score: x},{
+            duration: 1000,
+            easing:"linear",
+            step: function(now, fx){
+                $("#score").html(score + Math.floor(now));
+            },
+            queue:false,
+            complete: function(now, fx){
+                score += x;
+            }
+        });
+        $("#reward-tag").fadeIn({
+            duration:300,
+            step:function(now, fx){
+                $(this).css("top", -20 * now  +"px");
+            }
+        }).fadeOut({
+            duration:300,
+            easing:"linear",
+            step:function(now, fx){
+                $(this).css("top", -20 * ( 2 - now) + "px");
             }
         });
     }

@@ -8,8 +8,6 @@ namespace GeoQuiz.Models
 {
     public class QuestionsList
     {
-        public GameMode GameMode { get; }
-
         private List<QuestionAnswerPair> questions;
 
         public int CorrectAnswersCount { get; private set; } = 0;
@@ -25,6 +23,12 @@ namespace GeoQuiz.Models
         public int CurrentWrongStreak { get; private set; } = 0;
 
         public int CurrentQuestionIndex { get; private set; } = 0;
+
+        public float PointsMultiplier { get; private set; } = 1.0f;
+        private float maxPointsMultiplier = 10.0f;
+        private int basicPointsForAnswer = 100;
+        public int PointsForAnswer => (int) (basicPointsForAnswer * PointsMultiplier);
+        public int Score { get; set; } = 0;
 
         public QuestionAnswerPair this[int index]
         { get { return index < Count ? questions[index] : null; } }
@@ -44,13 +48,12 @@ namespace GeoQuiz.Models
         /// <summary>
         /// This constructor should be used to create list.
         /// </summary>
-        public QuestionsList(List<QuestionAnswerPair> questions, GameMode gameMode = GameMode.FlagByCountry)
+        public QuestionsList(List<QuestionAnswerPair> questions)
         {
             this.questions = questions;
             CurrentQuestionIndex = 0;
             CorrectAnswersCount = 0;
             WrongAnswersCount = 0;
-            GameMode = gameMode;
         }
 
         public bool TestAnswer(string answer, bool goToNextQuestionAfter = true)
@@ -66,6 +69,11 @@ namespace GeoQuiz.Models
                     if (CurrentCorrectStreak > LongestCorrectStreak)
                         LongestCorrectStreak = CurrentCorrectStreak;
                     CurrentWrongStreak = 0;
+
+                    // Add points
+                    Score += PointsForAnswer;
+                    if (CurrentCorrectStreak > 1 && PointsMultiplier < maxPointsMultiplier)
+                        PointsMultiplier += 0.1f;
                 }
                 else
                 {
@@ -74,6 +82,8 @@ namespace GeoQuiz.Models
                     if (CurrentWrongStreak > LongestWrongStreak)
                         LongestWrongStreak = CurrentWrongStreak;
                     CurrentCorrectStreak = 0;
+
+                    PointsMultiplier = 1.0f;
                 }
             }
             return result;

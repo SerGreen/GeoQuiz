@@ -58,3 +58,34 @@ textarea {
     margin: 16px 0px;
     padding: 8px 5px 5px;
 }
+
+#score {
+  font-size: 3em;
+  margin-top: -10px;
+}
+#reward-tag {
+  transform-style: preserve-3d;
+  position: absolute;
+  display: none;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(820%);
+  font-size: 1em;
+}
+
+#streak {
+    font-size: 42px;
+    font-weight: bolder;
+    color: #ffc107;
+    transition: all 150ms;
+    text-anchor: middle;
+    margin-top: -10px;
+}
+#streak span {
+    transition: all 150ms;
+}
+#streak div {
+    color: initial;
+    font-size: 33%;
+    font-weight: 300;
+}

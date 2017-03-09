@@ -21,7 +21,7 @@
 
     <div class="col-sm-offset-1 col-sm-10">
         <div class="col-sm-4">
-            @using (Html.BeginForm("Index", "Quiz", new { gameMode = "FlagByCountry", distractors = 5 }))
+            @using (Html.BeginForm("Index", "Quiz", new { gameMode = "FlagByCountry", distractors = 5 }, FormMethod.Post))
             {
                 <input class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" , value="Begin flags" />
             }
