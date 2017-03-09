@@ -106,7 +106,7 @@
     </div>
 </div>
 
-<!-- Script that sets same height to wells -->
+<!-- Script that sets same height to all wells -->
 <script>
     $(document).ready(function() {
         var max = 0;
@@ -145,6 +145,7 @@
                 // jQuery can't find anything if result is not inside <div>
                 result = '<div>' + result + '</div>';
 
+
                 // Update progress bar and counters
                 var current = $('#questionIndex', result).text();
                 var correct = $('#correctAnswers', result).text();
@@ -175,6 +176,7 @@
                     }
                     $.snackbar(options);
                 }
+                    // If no mistake
                 else {
                     // Make number of correct answers and streak counter jump
                     $('#correct-answers').css('font-size', '42px');
@@ -190,8 +192,12 @@
                     animateScore(parseInt(reward));
                 }
 
-                // Reset timer
-                if(@Model.TimeLimit > 0)
+                // If game is over => wait 3 seconds and reirect to results page
+                if ($('#game-over', result).length) {
+                    setTimeout(function() { window.location.href = '@Url.Action("Results")'; }, 3000);
+                }
+                    // Reset timer
+                else if(@Model.TimeLimit > 0)
                 {
                     timer.set(1.0);
                     timer.animate(0.0, null, function () {

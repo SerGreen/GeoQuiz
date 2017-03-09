@@ -42,7 +42,7 @@ namespace GeoQuiz.Controllers
         {
             GameSettings settings = Session["Settings"] as GameSettings;
             settings.Continents = new List<string>() { "AU" };
-            settings.TimeLimit = 0;
+            settings.TimeLimit = 20;
 
             List<Country> countries = db.Countries
                 // select country if it is on allowed continent and if it is either sovereign or one of the allowed non-sovereigns
@@ -107,16 +107,17 @@ namespace GeoQuiz.Controllers
                 else
                     TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
             }
-            
-            if (!questions.EndReached)
-            {
-                if (!Request.IsAjaxRequest())
-                    return View(GetQuestionViewModel(questions));
-                else
-                    return PartialView("PartialFlagByCountry", GetQuestionViewModel(questions));
-            }
+
+            if (!Request.IsAjaxRequest())
+                return View(GetQuestionViewModel(questions));
             else
-                return View("Results");
+                return PartialView("PartialFlagByCountry", GetQuestionViewModel(questions));
+        }
+
+        [HttpGet]
+        public ActionResult Results(QuestionsList questions)
+        {
+            return View(questions);
         }
     }
 }

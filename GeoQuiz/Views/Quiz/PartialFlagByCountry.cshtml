@@ -10,31 +10,45 @@
             : $"Wrong! It was flag of {mistake}";
     }
 
-    // Caclulate grid size for answer choices
-    double sqrt = Math.Sqrt(Model.Question.Choices.Length);
-    double columns = Math.Ceiling(sqrt);
-    double rows = Math.Ceiling(Model.Question.Choices.Length / columns);
+    double columns = 0, rows = 0;
     int currentChoice = 0;
+
+    if (Model.Question != null)
+    {
+        // Caclulate grid size for answer choices
+        double sqrt = Math.Sqrt(Model.Question.Choices.Length);
+        columns = Math.Ceiling(sqrt);
+        rows = Math.Ceiling(Model.Question.Choices.Length / columns);
+    }
+
+    bool gameOver = Model.Index >= Model.TotalQuestionsCount;
 }
 
-<h2 class="text-center">Select flag of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
-<hr />
+@if (!gameOver)
+{
+    <h2 class="text-center">Select flag of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
+    <hr />
 
-<div>
-    @for (int i = 0; i < rows; i++)
-    {
-        <div class="row text-center">
-            @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
-            {
-                <div class="col-xs-@(12/columns) hover-highlight answer-option">
-                    <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[currentChoice])" class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[currentChoice]).png" name="submit" />
-                </div>
-            }
-        </div>
-    }
-</div>
+    <div>
+        @for (int i = 0; i < rows; i++)
+        {
+            <div class="row text-center">
+                @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
+                {
+                    <div class="col-xs-@(12 / columns) hover-highlight answer-option">
+                        <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[currentChoice])" class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[currentChoice]).png" name="submit" />
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div hidden id="game-over"></div>
+}
 
-<div hidden id="questionIndex">@Model.Index</div>
+<div hidden id="questionIndex">@(gameOver ? Model.Index - 1 : Model.Index)</div>
 <div hidden id="correctAnswers">@Model.CorrectAnswers</div>
 <div hidden id="wrongAnswers">@Model.WrongAnswers</div>
 <div hidden id="correctStreak">@Model.CorrectStreak</div>

@@ -29,13 +29,15 @@ namespace GeoQuiz
                       "~/Scripts/progressbar.js",
                       "~/Scripts/material.js",
                       "~/Scripts/ripples.js",
-                      "~/Scripts/snackbar.js"));
+                      "~/Scripts/snackbar.js",
+                      "~/Scripts/rating.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css",
                       "~/Content/bootstrap-material-design.css",
                       "~/Content/ripples.css",
-                      "~/Content/snackbar.css"));
+                      "~/Content/snackbar.css",
+                      "~/Content/rating.css"));
         }
     }
 }

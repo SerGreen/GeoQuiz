@@ -1,0 +1,105 @@
+﻿@model GeoQuiz.Models.QuestionsList
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<div class="col-sm-12 well">
+    <div class="row text-center">
+        <h2>Well done!</h2>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+            <ul style="columns: 2" class="text-muted">
+                <li>Placeholder</li>
+                <li>Game</li>
+                <li>Settings</li>
+                <li>Description</li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <div class="row text-center">
+        <div class="col-sm-offset-2 col-sm-4">
+            <div id="percent-score" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Percent
+        </div>
+        <div class="col-sm-4">
+            <div id="points-score" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Score
+        </div>
+    </div>
+    <hr />
+    <div class="row text-center">
+        <div class="col-sm-offset-2 col-sm-2">
+            <div id="wrong-streak" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Longest streak
+        </div>
+        <div class="col-sm-2">
+            <div id="wrong-result" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Wrong answers
+        </div>
+        <div class="col-sm-2">
+            <div id="correct-result" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Correct answers
+        </div>
+        <div class="col-sm-2">
+            <div id="correct-streak" style="width:auto; height:auto; position:relative; margin:auto"></div>
+            Longest streak
+        </div>
+    </div>
+</div>
+
+<!-- Stats initialization scripts -->
+<script>
+    var percentCircle;
+    var scoreCircle;
+
+    $(document).ready(function () {
+        // Percent
+        percentCircle = new ProgressBar.Circle('#percent-score', {
+            color: '#666',
+            strokeWidth: 6,
+            trailWidth: 6,
+            duration: 3000,
+            text: {
+                className: 'result-percent',
+                autoStyleContainer: false
+            },
+            from: { color: '#F44336' },
+            to: { color: '#4CAF50' },
+
+            step: function(state, circle) {
+                var value = Math.round(circle.value() * 100);
+                circle.setText(value + '%');
+
+                circle.path.setAttribute('stroke', state.color);
+                circle.text.style.color = state.color;
+            }
+        });
+
+        // Score
+        scoreCircle = new ProgressBar.Circle('#points-score', {
+            color: '#FFC107',
+            strokeWidth: 6,
+            trailWidth: 6,
+            duration: 3000,
+            text: {
+                className: 'result-score',
+                autoStyleContainer: false
+            },
+
+            step: function(state, circle) {
+                var value = Math.round(circle.value() * @Model.Score);
+                circle.setText(value);
+            }
+        });
+        $(scoreCircle.text).css('color', '#666');
+
+
+        // Animate stats
+        percentCircle.animate(@Model.CorrectAnswersPercent.ToString().Replace(',','.'));
+        scoreCircle.animate(1.0);
+    });
+</script>

@@ -89,3 +89,13 @@ textarea {
     font-size: 33%;
     font-weight: 300;
 }
+
+.result-percent {
+    font-size: 400%;
+    font-weight: 500;
+}
+
+.result-score {
+    font-size: 300%;
+    font-weight: 500;
+}

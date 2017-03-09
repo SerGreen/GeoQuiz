@@ -349,6 +349,8 @@
     <Content Include="Content\Flags\99.png" />
     <Content Include="Content\bootstrap-material-design.css.map" />
     <Content Include="Content\bootstrap-material-design.min.css.map" />
+    <Content Include="Content\rating.css" />
+    <Content Include="Content\rating.min.css" />
     <Content Include="Content\ripples.css.map" />
     <Content Include="Content\ripples.min.css.map" />
     <Content Include="Content\snackbar.css.map" />
@@ -357,6 +359,7 @@
     <Content Include="Content\ripples.min.css" />
     <Content Include="Content\snackbar.css" />
     <Content Include="Content\snackbar.min.css" />
+    <Content Include="Content\stars.svg" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\material.js" />
@@ -398,6 +401,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\rating.js" />
+    <Content Include="Scripts\rating.min.js" />
     <Content Include="Scripts\ripples.js" />
     <Content Include="Scripts\ripples.min.js" />
     <Content Include="Scripts\snackbar.js" />
@@ -441,6 +446,7 @@
     <Content Include="Scripts\ripples.min.js.map" />
     <Content Include="Scripts\snackbar.min.js.map" />
     <Content Include="Views\Quiz\PartialFlagByCountry.cshtml" />
+    <Content Include="Views\Quiz\Results.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
