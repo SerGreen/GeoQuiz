@@ -39,4 +39,22 @@ textarea {
     line-height: 60px;
     display: block;
     color: #666;
+    transition: all 150ms;
+}
+
+.timer-text {
+    font-size: xx-large;
+}
+
+.hover-highlight {
+    transition: all 200ms;
+}
+.hover-highlight:hover {
+    background-color: #EEE;
+    transition: all 200ms;
+}
+
+.answer-option {
+    margin: 16px 0px;
+    padding: 8px 5px 5px;
 }

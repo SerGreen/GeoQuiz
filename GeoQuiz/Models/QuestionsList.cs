@@ -12,16 +12,19 @@ namespace GeoQuiz.Models
 
         private List<QuestionAnswerPair> questions;
 
-        public int CorrectAnswersCount { get { return _correctAnswersCount; } }
-        public float CorrectAnswersPercent { get { return (float) _correctAnswersCount / Count; } }
-        private int _correctAnswersCount = 0;
+        public int CorrectAnswersCount { get; private set; } = 0;
+        public float CorrectAnswersPercent { get { return (float) CorrectAnswersCount / Count; } }
 
-        public int WrongAnswersCount { get { return _wrongAnswersCount; } }
-        public float WrongAnswersPercent { get { return (float) _wrongAnswersCount / Count; } }
-        private int _wrongAnswersCount = 0;
+        public int WrongAnswersCount { get; private set; } = 0;
+        public float WrongAnswersPercent { get { return (float) WrongAnswersCount / Count; } }
 
-        public int CurrentQuestionIndex { get { return _currentQuestionIndex; } }
-        private int _currentQuestionIndex = 0;
+        public int LongestCorrectStreak { get; private set; } = 0;
+        public int CurrentCorrectStreak { get; private set; } = 0;
+
+        public int LongestWrongStreak { get; private set; } = 0;
+        public int CurrentWrongStreak { get; private set; } = 0;
+
+        public int CurrentQuestionIndex { get; private set; } = 0;
 
         public QuestionAnswerPair this[int index]
         { get { return index < Count ? questions[index] : null; } }
@@ -44,9 +47,9 @@ namespace GeoQuiz.Models
         public QuestionsList(List<QuestionAnswerPair> questions, GameMode gameMode = GameMode.FlagByCountry)
         {
             this.questions = questions;
-            _currentQuestionIndex = 0;
-            _correctAnswersCount = 0;
-            _wrongAnswersCount = 0;
+            CurrentQuestionIndex = 0;
+            CorrectAnswersCount = 0;
+            WrongAnswersCount = 0;
             GameMode = gameMode;
         }
 
@@ -55,11 +58,23 @@ namespace GeoQuiz.Models
             bool result = this[CurrentQuestionIndex].TestAnswer(answer);
             if (goToNextQuestionAfter)
             {
-                _currentQuestionIndex++;
+                CurrentQuestionIndex++;
                 if (result)
-                    _correctAnswersCount++;
+                {
+                    CorrectAnswersCount++;
+                    CurrentCorrectStreak++;
+                    if (CurrentCorrectStreak > LongestCorrectStreak)
+                        LongestCorrectStreak = CurrentCorrectStreak;
+                    CurrentWrongStreak = 0;
+                }
                 else
-                    _wrongAnswersCount++;
+                {
+                    WrongAnswersCount++;
+                    CurrentWrongStreak++;
+                    if (CurrentWrongStreak > LongestWrongStreak)
+                        LongestWrongStreak = CurrentWrongStreak;
+                    CurrentCorrectStreak = 0;
+                }
             }
             return result;
         }

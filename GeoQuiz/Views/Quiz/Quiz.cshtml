@@ -29,31 +29,30 @@
     
     $(document).ready(function () {
         timer = new ProgressBar.Circle('#timer', {
-            color: '#aaa',
-            // This has to be the same size as the maximum width to
-            // prevent clipping
-            strokeWidth: 10,
-            trailWidth: 4,
+            color: '#666',
+            strokeWidth: 6,
+            trailWidth: 6,
             duration: 10000,
             text: {
+                className: 'timer-text',
                 autoStyleContainer: false
             },
             from: { color: '#F44336' },
             to: { color: '#666' },
-            // Set default step function for all animate calls
+            
             step: function(state, circle) {
                 circle.path.setAttribute('stroke', state.color);
 
                 var value = Math.round(circle.value() * 10);
                 circle.setText(value);
-
+                circle.text.style.color = state.color;
             }
         });
-        timer.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-        timer.text.style.fontSize = '2rem';
 
         timer.set(1.0)
-        timer.animate(0.0);  // Number from 0.0 to 1.0
+        timer.animate(0.0, null, function () {
+            submitAnswerAjax(@Model.Index, null);
+        });
     });
 </script>
 
@@ -84,21 +83,21 @@
 
 <!-- RIGHT WELL -->
 <div class="col-sm-offset-1 col-sm-2 well same-height">
-    <div class="row">
-        <div id="timer" style="width:68px; height:68px; position:relative"></div>
+    <div class="row text-center">
+        <div id="timer" style="width:68px; height:68px; position:relative; margin:auto"></div>
         Time left
     </div>
 </div>
 
 <!-- Script that sets same height to wells -->
 <script>
-    var max;
+    var max = 0;
     // Getting the greatest height
-    $(".same-height").each(function() {
+    $('.same-height').each(function () {
         max = ($(this).height() > max) ? $(this).height() : max;
     });
     // Applying the greatest height to each element
-    $(".same-height").height(max);
+    $('.same-height').height(max);
 </script>
 
 <!-- AJAX submit answer function. It is used by Partial Views in Middle Well. It returns partial view with new question's HTML code. -->
@@ -132,6 +131,10 @@
 
                 // If there was mistake, div with id="mistake" is generated
                 if ($('#mistake', result).length) {
+                    // Make number of wrong answers jump
+                    $('#wrong-answers').css('font-size', '42px');
+                    setTimeout(function () { $('#wrong-answers').css('font-size', ''); }, 150);
+
                     // Display snackbar
                     var options = {
                         content: $('#mistake', result).text(),
@@ -139,6 +142,17 @@
                     }
                     $.snackbar(options);
                 }
+                else {
+                    // Make number of correct answers jump
+                    $('#correct-answers').css('font-size', '42px');
+                    setTimeout(function () { $('#correct-answers').css('font-size', ''); }, 150);
+                }
+
+                // Reset timer
+                timer.set(1.0);
+                timer.animate(0.0, null, function () {
+                    submitAnswerAjax(@Model.Index, null);
+                });
             }
         });
     }

@@ -21,12 +21,12 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(GameMode gameMode = GameMode.FlagByCountry)
+        public ActionResult Index(GameMode gameMode = GameMode.FlagByCountry, Difficulty difficulty = Difficulty.Medium, int distractors = 3)
         {
             switch (gameMode)
             {
                 case GameMode.FlagByCountry:
-                    return StartFlagByCountryGame();
+                    return StartFlagByCountryGame(difficulty, distractors);
                 case GameMode.CountryByFlag:
                 case GameMode.CapitalByCountry:
                 default:
@@ -91,7 +91,12 @@ namespace GeoQuiz.Controllers
         public ActionResult Quiz(QuestionsList questions, string answer, int questionIndex)
         {
             if (questions.TestAnswer(answer) == false)
-                TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
+            {
+                if (answer.Length == 0)
+                    TempData["Mistake"] = "Timeout";
+                else
+                    TempData["Mistake"] = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
+            }
 
             if (!questions.EndReached)
             {
