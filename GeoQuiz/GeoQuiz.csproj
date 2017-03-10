@@ -417,6 +417,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Database\DatabaseClasses\GeoDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -445,7 +446,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Quiz\Quiz.cshtml" />
-    <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
     <Content Include="Scripts\material.min.js.map" />
     <Content Include="Scripts\ripples.min.js.map" />
     <Content Include="Scripts\snackbar.min.js.map" />

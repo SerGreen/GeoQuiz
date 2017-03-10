@@ -16,7 +16,7 @@ namespace GeoQuiz
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Quiz", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Menu", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

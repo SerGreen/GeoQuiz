@@ -12,7 +12,7 @@
     @Scripts.RenderFormat(@"<script async src=""{0}""></script>", "~/bundles/bootstrap")
 </head>
 <body>
-    <script>$.material.init();</script>
+    <script>$(function () { $.material.init(); });</script>
     <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="@Url.Action("Index", "Quiz")" class="navbar-brand" style="font-size:x-large"><span class="glyphicon glyphicon-globe"></span> GeoQuiz</a>
+                <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof)" class="navbar-brand" style="font-size:x-large"><span class="glyphicon glyphicon-globe"></span> GeoQuiz</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

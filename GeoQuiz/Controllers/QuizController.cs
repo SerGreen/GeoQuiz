@@ -9,29 +9,25 @@ using System.Web.Mvc;
 
 namespace GeoQuiz.Controllers
 {
+    
     public class QuizController : Controller
     {
         GeoDBDataContext db = new GeoDBDataContext();
         Random rnd = new Random();
+        
+        public static string Nameof => nameof(QuizController).Replace("Controller", "");
 
-        // GET: Quiz
         [HttpGet]
-        public ViewResult Index()
+        public ActionResult Index(GameSettings settings)
         {
-            return View();
-        }
+            settings.Continents = new List<string>() { "AU" };
+            settings.TimeLimit = 20;
+            settings.DistractorsAmount = 5;
 
-        [HttpPost]
-        public ActionResult Index(GameSettings settings, GameMode gameMode = GameMode.FlagByCountry, Difficulty difficulty = Difficulty.Medium, int distractors = 3)
-        {
-            settings.GameMode = gameMode;
-            settings.Difficulty = difficulty;
-            settings.DistractorsAmount = distractors;
-
-            switch (gameMode)
+            switch (settings.GameMode)
             {
                 case GameMode.FlagByCountry:
-                    return StartFlagByCountryGame();
+                    return StartFlagByCountryGame(settings);
                 case GameMode.CountryByFlag:
                 case GameMode.CapitalByCountry:
                 default:
@@ -39,12 +35,8 @@ namespace GeoQuiz.Controllers
             }
         }
         
-        private ActionResult StartFlagByCountryGame()
+        private ActionResult StartFlagByCountryGame(GameSettings settings)
         {
-            GameSettings settings = Session["Settings"] as GameSettings;
-            settings.Continents = new List<string>() { "AU" };
-            settings.TimeLimit = 20;
-
             List<Country> countries = db.Countries
                 // select country if it is on allowed continent and if it is either sovereign or one of the allowed non-sovereigns
                 .Where(x => settings.Continents.Contains(x.Continent) && (x.IsSovereign || (settings.AllowedNonSovereignIds.Contains(x.Id))))

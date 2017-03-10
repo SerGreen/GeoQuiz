@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<script>
+    $(document).ready(function () {
+        $('.btn-hover-highlight').hover(function () {
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-primary');
+        }, function () {
+            $(this).removeClass('btn-primary');
+            $(this).addClass('btn-default');
+        })
+    });
+</script>
+
+<div class="well col-sm-offset-1 col-sm-10 text-center">
+    <h2 class="text-muted">Start new game</h2>
+    <hr />
+
+    <div class="col-sm-offset-1 col-sm-10">
+        <button type="button" class="btn btn-lg btn-primary btn-raised" data-toggle="modal" data-target="#start-game">Start new game</button>
+    </div>
+</div>
+
+<!-- Modals -->
+
+<div id="start-game" class="modal fade" tabindex="-1" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title text-center">Game mode</h3>
+            </div>
+            <div class="modal-body">
+                <div class="center-div">
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "FlagByCountry", distractors = 5 }, FormMethod.Post))
+                    {
+                        <button class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" value="Begin flags">Begin flags</button>
+                    }
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "CountryByFlag" }))
+                    {
+                        <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin countries">Begin countries</button>
+                    }
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "CapitalByCountry" }))
+                    {
+                        <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin capitals">Begin capitals</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="allowed-countries" class="modal fade" tabindex="-1" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title text-center">Caption</h3>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Body of modal.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 45.65px; top: 13.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 54.65px; top: 18.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 34.65px; top: 23.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 16.65px; top: 7.28334px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 41.65px; top: 16.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function nope() {
+        $.snackbar({
+            content: "Nope!",
+            timeout: 1000
+        });
+    }
+</script>

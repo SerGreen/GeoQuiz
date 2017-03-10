@@ -16,6 +16,12 @@ textarea {
     max-width: 280px;
 }
 
+.center-div {
+    display: table;
+    margin: 0 auto;
+}
+
+/* Vertical divider between col- blocks */
 .row.vdivide [class*='col-']:not(:last-child):after {
   background: #e0e0e0;
   width: 1px;
@@ -28,6 +34,7 @@ textarea {
   
 }
 
+/* Counters of correct and wrong answers */
 .numberCircle {
     border-radius: 50%;
     width: 68px;
@@ -42,10 +49,12 @@ textarea {
     transition: all 150ms;
 }
 
+/* Styling for timer */
 .timer-text {
     font-size: xx-large;
 }
 
+/* Answer options styling */
 .hover-highlight {
     transition: all 200ms;
 }
@@ -53,12 +62,12 @@ textarea {
     background-color: #EEE;
     transition: all 200ms;
 }
-
 .answer-option {
     margin: 16px 0px;
     padding: 8px 5px 5px;
 }
 
+/* Style for score counter in game */
 #score {
   font-size: 3em;
   margin-top: -10px;
@@ -72,7 +81,6 @@ textarea {
   transform: translateX(-50%) translateY(820%);
   font-size: 1em;
 }
-
 #streak {
     font-size: 42px;
     font-weight: bolder;
@@ -90,21 +98,15 @@ textarea {
     font-weight: 300;
 }
 
+/* Style for results screen */
 .result-percent {
     font-size: 400%;
     font-weight: 500;
 }
-
 .result-score {
     font-size: 300%;
     font-weight: 500;
 }
-
-.center-div {
-    display: table;
-    margin: 0 auto;
-}
-
 .result-text-big {
     margin-top: 0.5em;
     font-size: large;
@@ -120,7 +122,24 @@ textarea {
 .center-ul {
     text-align: center;
 }
-
 .center-ul ul {
     list-style: none;
+}
+
+/* Modal centered vertically */
+.modal {
+  text-align: center;
+}
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace GeoQuiz.Models.Shared
 {
@@ -28,6 +29,13 @@ namespace GeoQuiz.Models.Shared
                 yield return elements[swapIndex];
                 elements[swapIndex] = elements[i];
             }
+        }
+
+        public static string Nameof(this Type type)
+        {
+            return type.Name.EndsWith("Controller")
+                   ? type.Name.Replace("Controller", "")
+                   : type.Name;
         }
     }
 }
