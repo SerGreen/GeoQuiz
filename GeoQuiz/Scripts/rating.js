@@ -40,7 +40,7 @@
         if (i < currentRating) { star.classList.add('is-active'); }
         el.appendChild(star);
         stars.push(star);
-        attachStarEvents(star);
+        //attachStarEvents(star);
       }
     })();
 

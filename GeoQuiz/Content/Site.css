@@ -99,3 +99,28 @@ textarea {
     font-size: 300%;
     font-weight: 500;
 }
+
+.center-div {
+    display: table;
+    margin: 0 auto;
+}
+
+.result-text-big {
+    margin-top: 0.5em;
+    font-size: large;
+    font-weight: normal;
+}
+.result-small-text {
+    font-size: larger;
+}
+.result-small-gauge-text {
+    font-size: xx-large;
+}
+
+.center-ul {
+    text-align: center;
+}
+
+.center-ul ul {
+    list-style: none;
+}

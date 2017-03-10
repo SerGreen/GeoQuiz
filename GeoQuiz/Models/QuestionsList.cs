@@ -58,8 +58,8 @@ namespace GeoQuiz.Models
 
         public bool TestAnswer(string answer, bool goToNextQuestionAfter = true)
         {
-            bool result = this[CurrentQuestionIndex].TestAnswer(answer);
-            if (goToNextQuestionAfter)
+            bool result = this[CurrentQuestionIndex]?.TestAnswer(answer) ?? false;
+            if (!EndReached && goToNextQuestionAfter)
             {
                 CurrentQuestionIndex++;
                 if (result)

@@ -15,16 +15,16 @@
 
 .c-rating__item {
   -webkit-box-flex: 0;
-  -webkit-flex: 0 0 24px;
-      -ms-flex: 0 0 24px;
-          flex: 0 0 24px;
-  height: 24px;
+  -webkit-flex: 0 0 6em;
+      -ms-flex: 0 0 6em;
+          flex: 0 0 6em;
+  height: 6em;
+  width: 6em;
   background: url("../img/stars.svg");
   background-position: 0 0;
-  cursor: pointer;
+  background-size: 200%;
 }
 
-.c-rating__item:hover,
 .c-rating__item.is-active {
-  background-position: -24px 0;
+  background-position: -6em 0;
 }

@@ -18,5 +18,16 @@ namespace GeoQuiz.Models.Shared
                 copy.RemoveAt(index);
             }
         }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rnd)
+        {
+            T[] elements = source.ToArray();
+            for (int i = elements.Length - 1; i >= 0; i--)
+            {
+                int swapIndex = rnd.Next(i + 1);
+                yield return elements[swapIndex];
+                elements[swapIndex] = elements[i];
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace GeoQuiz.Controllers
     public class QuizController : Controller
     {
         GeoDBDataContext db = new GeoDBDataContext();
+        Random rnd = new Random();
 
         // GET: Quiz
         [HttpGet]
@@ -47,7 +48,7 @@ namespace GeoQuiz.Controllers
             List<Country> countries = db.Countries
                 // select country if it is on allowed continent and if it is either sovereign or one of the allowed non-sovereigns
                 .Where(x => settings.Continents.Contains(x.Continent) && (x.IsSovereign || (settings.AllowedNonSovereignIds.Contains(x.Id))))
-                .Shuffle()
+                .Shuffle(rnd)
                 .ToList();
 
             // Assemble questions for each country
@@ -66,7 +67,7 @@ namespace GeoQuiz.Controllers
                                 (fn.Country1.IsSovereign || settings.AllowedNonSovereignIds.Contains(fn.CountryId2)))
                     .OrderBy(x => x.Distance)
                     .Take((int)settings.Difficulty)
-                    .Shuffle()
+                    .Shuffle(rnd)
                     .Take(settings.DistractorsAmount)
                     .Select(x => x.CountryId2.ToString())
                     .ToArray();
@@ -115,9 +116,9 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpGet]
-        public ActionResult Results(QuestionsList questions)
+        public ActionResult Results(QuestionsList questions, GameSettings settings)
         {
-            return View(questions);
+            return View(new ResultsViewModel() { Questions = questions, GameSettings = settings });
         }
     }
 }

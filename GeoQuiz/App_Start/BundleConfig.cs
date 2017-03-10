@@ -37,7 +37,8 @@ namespace GeoQuiz
                       "~/Content/bootstrap-material-design.css",
                       "~/Content/ripples.css",
                       "~/Content/snackbar.css",
-                      "~/Content/rating.css"));
+                      "~/Content/rating.css",
+                      "~/Content/confetti.css"));
         }
     }
 }
