@@ -430,9 +430,10 @@
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\QuestionsModelBinder.cs" />
     <Compile Include="Models\GameSettings.cs" />
+    <Compile Include="Models\ViewModels\MenuIndexViewModel.cs" />
     <Compile Include="Models\QuestionsList.cs" />
-    <Compile Include="Models\QuestionViewModel.cs" />
-    <Compile Include="Models\ResultsViewModel.cs" />
+    <Compile Include="Models\ViewModels\QuestionViewModel.cs" />
+    <Compile Include="Models\ViewModels\ResultsViewModel.cs" />
     <Compile Include="Models\Shared\Enums.cs" />
     <Compile Include="Models\Shared\ExtensionMethods.cs" />
     <Compile Include="Models\Question.cs" />

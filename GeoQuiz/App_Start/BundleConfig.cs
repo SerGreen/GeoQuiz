@@ -33,12 +33,12 @@ namespace GeoQuiz
                       "~/Scripts/rating.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css",
                       "~/Content/bootstrap-material-design.css",
                       "~/Content/ripples.css",
                       "~/Content/snackbar.css",
                       "~/Content/rating.css",
-                      "~/Content/confetti.css"));
+                      "~/Content/confetti.css",
+                      "~/Content/site.css"));
         }
     }
 }

@@ -1,6 +1,10 @@
-﻿
+﻿@model GeoQuiz.Models.GameSettings
+@using GeoQuiz.Models.Shared
+
 @{
     ViewBag.Title = "Index";
+    string[] allContinents = { "NA", "SA", "EU", "AS", "AF", "AU" };
+    string[] ContinentNames = { "North America", "South America", "Europe", "Asia", "Africa", "Australia and Oceania" };
 }
 
 <script>
@@ -15,13 +19,60 @@
     });
 </script>
 
-<div class="well col-sm-offset-1 col-sm-10 text-center">
-    <h2 class="text-muted">Start new game</h2>
-    <hr />
+<div class="col-sm-8">
+    <!-- Left well -->
+    <div class="well col-sm-12 text-center">
+        <h2 class="text-muted">Start new game</h2>
+        <hr />
 
-    <div class="col-sm-offset-1 col-sm-10">
         <button type="button" class="btn btn-lg btn-primary btn-raised" data-toggle="modal" data-target="#start-game">Start new game</button>
     </div>
+
+    <div class="well col-sm-12 text-center">
+        <div class="col-sm-4">
+            <h4 class="text-muted">Time limit</h4>
+            <div class="radio-button-group" data-toggle="buttons">
+                <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised">
+                    <input name="timeLimit" value="5" type="radio">5s
+                </label>
+                <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised btn-primary active">
+                    <input name="time-Limit" value="10" type="radio">10s
+                </label>
+                <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised">
+                    <input name="time-Limit" value="20" type="radio">20s
+                </label>
+                <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised">
+                    <input name="timeLimit" value="0" type="radio">∞
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h4 class="text-muted">Answer options</h4>
+        </div>
+        <div class="col-sm-4">
+            <h4 class="text-muted">Difficulty</h4>
+        </div>
+    </div>
+</div>
+<!-- Right well -->
+<div class="well col-sm-offset-1 col-sm-3">
+    <h4 class="text-muted text-center">Continents</h4>
+    <hr />
+
+    <div>
+        @for (int i = 0; i < allContinents.Length; i++)
+        {
+            <div class="checkbox">
+                <label>
+                    <input @(Model.Continents.Contains(allContinents[i]) ? "checked" : null) type="checkbox">
+                    @ContinentNames[i]
+                </label>
+            </div>
+        }
+    </div>
+    <hr />
+
+    <button type="button" class="btn btn-sm btn-primary btn-raised btn-block" data-toggle="modal" data-target="#allowed-countries">Configure non-sovereign<br />countries</button>
 </div>
 
 <!-- Modals -->
@@ -35,15 +86,15 @@
             </div>
             <div class="modal-body">
                 <div class="center-div">
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "FlagByCountry", distractors = 5 }, FormMethod.Post))
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.FlagByCountry }))
                     {
                         <button class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" value="Begin flags">Begin flags</button>
                     }
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "CountryByFlag" }))
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.CountryByFlag }))
                     {
                         <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin countries">Begin countries</button>
                     }
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = "CapitalByCountry" }))
+                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.CapitalByCountry }))
                     {
                         <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin capitals">Begin capitals</button>
                     }
@@ -66,7 +117,7 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel<div class="ripple-container"><div class="ripple ripple-on ripple-out" style="left: 45.65px; top: 13.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 54.65px; top: 18.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 34.65px; top: 23.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 16.65px; top: 7.28334px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div><div class="ripple ripple-on ripple-out" style="left: 41.65px; top: 16.2833px; background-color: rgb(0, 150, 136); transform: scale(10.875);"></div></div></button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -78,5 +129,13 @@
             content: "Nope!",
             timeout: 1000
         });
+    }
+
+    // UI hoockups
+    function radioButtonHighlight(button) {
+        if (button) {
+            $(button).siblings().removeClass('btn-primary');
+            $(button).addClass('btn-primary');
+        }
     }
 </script>

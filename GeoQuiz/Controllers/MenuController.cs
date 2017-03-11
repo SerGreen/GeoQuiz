@@ -17,15 +17,16 @@ namespace GeoQuiz.Controllers
 
         // GET: Menu
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(GameSettings settings)
         {
-            return View();
+            return View(settings);
         }
 
         [HttpPost]
         [ActionName("Index")]
-        public ActionResult IndexPost()
+        public ActionResult IndexPost(GameSettings settings, GameMode gameMode = GameMode.FlagByCountry)
         {
+            settings.GameMode = gameMode;
             return RedirectToAction(nameof(QuizController.Index), QuizController.Nameof);
         }
     }

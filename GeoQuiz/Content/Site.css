@@ -143,3 +143,16 @@ textarea {
   text-align: left;
   vertical-align: middle;
 }
+
+/*  */
+.checkbox label,
+.togglebutton label {
+    color: #333;
+}
+
+.radio-button-group label {
+    width: 20%;
+    padding: 4px 10px;
+    text-transform: initial;
+    
+}
