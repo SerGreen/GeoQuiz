@@ -154,5 +154,28 @@ textarea {
     width: 20%;
     padding: 4px 10px;
     text-transform: initial;
-    
+}
+
+.combined-button button:first-child {
+    margin-bottom: 0px;
+    padding: 20px;
+    width: 100%;
+    border-radius: 2px 2px 0px 0px;
+    font-size:xx-large;
+}
+.combined-button div {
+    padding-left:1px;
+    margin-top: 0px;
+}
+.combined-button div label:last-child.active {
+    transform:scaleX(1.001); /* ПИКСЕЛЬ ПЁРФЕКТ СУКА (ёбанное окр ;__;) */
+}
+.combined-button div .btn {
+    border-radius: 0px 0px 0px 0px;
+}
+.combined-button div .btn:last-child {
+    border-radius: 0px 0px 2px 0px;
+}
+.combined-button div .btn:first-child {
+    border-radius: 0px 0px 0px 2px;
 }
