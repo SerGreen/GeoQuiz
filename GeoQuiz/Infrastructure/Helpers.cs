@@ -18,7 +18,7 @@ namespace GeoQuiz.Infrastructure
                     isPresent[i] = true;
 
             if (isPresent.All(x => x == true))
-                return "Whole world";
+                return "🌍 Whole world";
 
             if (isPresent[0] && isPresent[1])
                 list.Add("North and South America");

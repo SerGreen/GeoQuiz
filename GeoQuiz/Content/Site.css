@@ -144,18 +144,33 @@ textarea {
   vertical-align: middle;
 }
 
-/*  */
+/* Color fix for checkbox and toggle button */
 .checkbox label,
 .togglebutton label {
     color: #333;
 }
 
-.radio-button-group label {
+/* Font size fix for infinity and others */
+.bigger-symbol {
+    font-size: 28px;
+    margin: -10px
+}
+
+/* Radio-button group as regular buttons */
+.radio-button-group .btn {
     width: 20%;
     padding: 4px 10px;
     text-transform: initial;
+    border-radius: 0px;
+}
+.radio-button-group .btn:first-child {
+    border-radius: 2px 0px 0px 2px;
+}
+.radio-button-group .btn:last-child {
+    border-radius: 0px 2px 2px 0px;
 }
 
+/* Start and Game mode buttons */
 .combined-button button:first-child {
     margin-bottom: 0px;
     padding: 20px;
@@ -164,11 +179,10 @@ textarea {
     font-size:xx-large;
 }
 .combined-button div {
-    padding-left:1px;
     margin-top: 0px;
 }
-.combined-button div label:last-child.active {
-    transform:scaleX(1.001); /* ПИКСЕЛЬ ПЁРФЕКТ СУКА (ёбанное окр ;__;) */
+.combined-button div label:last-child {
+    transform:scaleX(0.995); /* ПИКСЕЛЬ ПЁРФЕКТ СУКА (ёбанное окр ;__;) */
 }
 .combined-button div .btn {
     border-radius: 0px 0px 0px 0px;
@@ -178,4 +192,14 @@ textarea {
 }
 .combined-button div .btn:first-child {
     border-radius: 0px 0px 0px 2px;
+}
+#start-button span {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 300ms;
+}
+#start-button:hover span {
+    visibility: visible;
+    opacity: 1;
+    transition: all 300ms;
 }

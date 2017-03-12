@@ -8,6 +8,7 @@
     int[] timeLimits = { 5, 10, 20, 0 };
     int[] answerOptions = { 3, 5, 11, 0 };
     Difficulty[] difficulties = { Difficulty.Easy, Difficulty.Medium, Difficulty.Hard, Difficulty.VeryHard };
+    char[] difficultySymbols = { '⚀', '⚂', '⚄', '⚅' };
 }
 
 <script>
@@ -28,17 +29,18 @@
         <h2 class="text-muted text-uppercase">Start new game</h2>
         <hr />
 
-
         <div class="combined-button col-sm-offset-2 col-sm-8">
-            <button type="button" class="btn btn-lg btn-primary btn-raised" data-toggle="modal" data-target="#start-game">Start!</button>
-            <div class="btn-group-justified" data-toggle="buttons" id="gameMode">
-                <label onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
+            <button id="start-button" type="button" class="btn btn-lg btn-primary btn-raised" data-toggle="modal" data-target="#start-game">
+                <span>❬&nbsp;</span> Start! <span>&nbsp;❭</span>
+            </button>
+            <div class="btn-group-justified btn-group" data-toggle="buttons" id="gameMode">
+                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
                     <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">Flags
                 </label>
-                <label onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
+                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
                     <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">Countries
                 </label>
-                <label onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
+                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
                     <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">Capitals
                 </label>
             </div>
@@ -48,14 +50,14 @@
     <div class="well col-sm-12 text-center">
         <div class="col-sm-4">
             <h4 class="text-muted">Time limit</h4>
-            <div class="radio-button-group" data-toggle="buttons" id="timeLimit">
+            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
                 @for (int i = 0; i < timeLimits.Length; i++)
                 {
                     <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == Model.TimeLimit ? "active btn-primary" : "")">
                         <input name="timeLimit" value="@timeLimits[i]" type="radio">
                         @if (timeLimits[i] == 0)
                         {
-                            <div style="font-size:28px;margin:-10px">∞</div>
+                            <div class="bigger-symbol">∞</div>
                         }
                         else
                         {
@@ -67,22 +69,31 @@
         </div>
         <div class="col-sm-4">
             <h4 class="text-muted">Answer options</h4>
-            <div class="radio-button-group" data-toggle="buttons" id="answerOptions">
+            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
                 @for (int i = 0; i < answerOptions.Length; i++)
                 {
-                    <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == Model.DistractorsAmount? "active btn-primary" : "")">
-                        <input name="answerOptions" value="@answerOptions[i]" type="radio">@(answerOptions[i] + 1)
+                    <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == Model.DistractorsAmount ? "active btn-primary" : null) @(answerOptions[i] == 0 && Model.GameMode == GameMode.FlagByCountry ? "disabled" : null)" @(answerOptions[i] == 0 ? "id=pencil" : null)>
+                        <input name="answerOptions" value="@answerOptions[i]" type="radio">
+                        @if (answerOptions[i] == 0)
+                        {
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        }
+                        else
+                        {
+                            @(answerOptions[i] + 1)
+                        }
                     </label>
                 }
             </div>
         </div>
         <div class="col-sm-4">
             <h4 class="text-muted">Difficulty</h4>
-            <div class="radio-button-group" data-toggle="buttons" id="difficulty">
+            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
                 @for (int i = 0; i < difficulties.Length; i++)
                 {
                     <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(difficulties[i] == Model.Difficulty ? "active btn-primary" : "")">
-                        <input name="difficulty" value="@difficulties[i]" type="radio">@difficulties[i]
+                        <input name="difficulty" value="@difficulties[i]" type="radio">
+                        <div class="bigger-symbol">@difficultySymbols[i]</div>
                     </label>
                 }
             </div>
@@ -166,11 +177,30 @@
         });
     }
 
-    // UI hoockups
+    // Workaround of Bootstrap issue
+    $('.btn-group .btn').click(function (event) {
+        if ($(this).hasClass('disabled'))
+            event.stopPropagation();
+    });
+
+    // Visualisation of radio group switching
     function radioButtonHighlight(button) {
-        if (button) {
+        if (button && !$(button).hasClass('disabled')) {
             $(button).siblings().removeClass('btn-primary');
             $(button).addClass('btn-primary');
         }
+    }
+
+    // Activation and deactivation of 'no answer options (type in)' button
+    // This setting is not available in Flag by Country mode
+    function switchGameMode() {
+        var pencil = $('#pencil');
+        if ($('#gameMode .active input').val() == '@GameMode.FlagByCountry') {
+            if (pencil.hasClass('active'))
+                pencil.siblings().last().click();
+            pencil.addClass('disabled');
+        }
+        else
+            pencil.removeClass('disabled');
     }
 </script>
