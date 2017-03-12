@@ -2,7 +2,7 @@
 @using GeoQuiz.Models.Shared
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "GeoQuiz";
     string[] allContinents = { "NA", "SA", "EU", "AS", "AF", "AU" };
     string[] ContinentNames = { "North America", "South America", "Europe", "Asia", "Africa", "Australia and Oceania" };
     int[] timeLimits = { 5, 10, 20, 0 };
@@ -23,102 +23,105 @@
     });
 </script>
 
-<div class="col-sm-8">
-    <!-- Left well -->
-    <div class="well col-sm-12 text-center">
-        <h2 class="text-muted text-uppercase">Start new game</h2>
+<div class="equal-height-children">
+    <div class="col-sm-8">
+        <!-- Left top well -->
+        <div class="well col-sm-12 text-center">
+            <h2 class="text-muted text-uppercase">Start new game</h2>
+            <hr />
+
+            <div class="combined-button col-sm-offset-2 col-sm-8">
+                <button id="start-button" type="button" class="btn btn-lg btn-primary btn-raised" onclick="startNewGame()">
+                    <span>❬&nbsp;</span> Start! <span>&nbsp;❭</span>
+                </button>
+                <div class="btn-group-justified btn-group" data-toggle="buttons" id="gameMode">
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
+                        <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">Flags
+                    </label>
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
+                        <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">Countries
+                    </label>
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
+                        <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">Capitals
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left bottom well -->
+        <div class="well col-sm-12 text-center">
+            <div class="col-sm-4">
+                <h4 class="text-muted">Time limit</h4>
+                <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
+                    @for (int i = 0; i < timeLimits.Length; i++)
+                    {
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == Model.TimeLimit ? "active btn-primary" : "")">
+                            <input name="timeLimit" value="@timeLimits[i]" type="radio">
+                            @if (timeLimits[i] == 0)
+                            {
+                                <div class="bigger-symbol">∞</div>
+                            }
+                            else
+                            {
+                                @($"{timeLimits[i]}s")
+                            }
+                        </label>
+                    }
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h4 class="text-muted">Answer options</h4>
+                <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
+                    @for (int i = 0; i < answerOptions.Length; i++)
+                    {
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == Model.DistractorsAmount ? "active btn-primary" : null) @(answerOptions[i] == 0 && Model.GameMode == GameMode.FlagByCountry ? "disabled" : null)" @(answerOptions[i] == 0 ? "id=pencil" : null)>
+                            <input name="answerOptions" value="@answerOptions[i]" type="radio">
+                            @if (answerOptions[i] == 0)
+                            {
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            }
+                            else
+                            {
+                                @(answerOptions[i] + 1)
+                            }
+                        </label>
+                    }
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h4 class="text-muted">Difficulty</h4>
+                <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
+                    @for (int i = 0; i < difficulties.Length; i++)
+                    {
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(difficulties[i] == Model.Difficulty ? "active btn-primary" : "")">
+                            <input name="difficulty" value="@difficulties[i]" type="radio">
+                            <div class="bigger-symbol">@difficultySymbols[i]</div>
+                        </label>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right well -->
+    <div class="well col-sm-offset-1 col-sm-3">
+        <h4 class="text-muted text-center">Continents</h4>
+        <hr />
+        <div id="continents">
+            @for (int i = 0; i < allContinents.Length; i++)
+            {
+                <div class="checkbox">
+                    <label>
+                        <input @(Model.Continents.Contains(allContinents[i]) ? "checked" : null) type="checkbox" value="@allContinents[i]">
+                        @ContinentNames[i]
+                    </label>
+                </div>
+            }
+        </div>
         <hr />
 
-        <div class="combined-button col-sm-offset-2 col-sm-8">
-            <button id="start-button" type="button" class="btn btn-lg btn-primary btn-raised" data-toggle="modal" data-target="#start-game">
-                <span>❬&nbsp;</span> Start! <span>&nbsp;❭</span>
-            </button>
-            <div class="btn-group-justified btn-group" data-toggle="buttons" id="gameMode">
-                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
-                    <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">Flags
-                </label>
-                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
-                    <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">Countries
-                </label>
-                <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
-                    <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">Capitals
-                </label>
-            </div>
-        </div>
+        <div class="center-div"><button type="button" class="btn btn-sm btn-primary btn-raised btn-block" data-toggle="modal" data-target="#allowed-countries">Configure non-sovereign<br />countries</button></div>
     </div>
-
-    <div class="well col-sm-12 text-center">
-        <div class="col-sm-4">
-            <h4 class="text-muted">Time limit</h4>
-            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
-                @for (int i = 0; i < timeLimits.Length; i++)
-                {
-                    <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == Model.TimeLimit ? "active btn-primary" : "")">
-                        <input name="timeLimit" value="@timeLimits[i]" type="radio">
-                        @if (timeLimits[i] == 0)
-                        {
-                            <div class="bigger-symbol">∞</div>
-                        }
-                        else
-                        {
-                            @($"{timeLimits[i]}s")
-                        }
-                    </label>
-                }
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <h4 class="text-muted">Answer options</h4>
-            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
-                @for (int i = 0; i < answerOptions.Length; i++)
-                {
-                    <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == Model.DistractorsAmount ? "active btn-primary" : null) @(answerOptions[i] == 0 && Model.GameMode == GameMode.FlagByCountry ? "disabled" : null)" @(answerOptions[i] == 0 ? "id=pencil" : null)>
-                        <input name="answerOptions" value="@answerOptions[i]" type="radio">
-                        @if (answerOptions[i] == 0)
-                        {
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        }
-                        else
-                        {
-                            @(answerOptions[i] + 1)
-                        }
-                    </label>
-                }
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <h4 class="text-muted">Difficulty</h4>
-            <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
-                @for (int i = 0; i < difficulties.Length; i++)
-                {
-                    <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(difficulties[i] == Model.Difficulty ? "active btn-primary" : "")">
-                        <input name="difficulty" value="@difficulties[i]" type="radio">
-                        <div class="bigger-symbol">@difficultySymbols[i]</div>
-                    </label>
-                }
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Right well -->
-<div class="well col-sm-offset-1 col-sm-3">
-    <h4 class="text-muted text-center">Continents</h4>
-    <hr />
-
-    <div>
-        @for (int i = 0; i < allContinents.Length; i++)
-        {
-            <div class="checkbox">
-                <label>
-                    <input @(Model.Continents.Contains(allContinents[i]) ? "checked" : null) type="checkbox">
-                    @ContinentNames[i]
-                </label>
-            </div>
-        }
-    </div>
-    <hr />
-
-    <button type="button" class="btn btn-sm btn-primary btn-raised btn-block" data-toggle="modal" data-target="#allowed-countries">Configure non-sovereign<br />countries</button>
 </div>
 
 <!-- Modals -->
@@ -150,23 +153,8 @@
     </div>
 </div>
 
-<div id="allowed-countries" class="modal fade" tabindex="-1" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title text-center">Caption</h3>
-            </div>
-            <div class="modal-body">
-                <p>
-                    Body of modal.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
-            </div>
-        </div>
-    </div>
+<div id="allowed-countries" class="modal fade" tabindex="-1" style="display: none">
+    @Html.Partial("PartialNonSovereignModal", Model.AllowedNonSovereignIds)
 </div>
 
 <script>
@@ -177,7 +165,7 @@
         });
     }
 
-    // Workaround of Bootstrap issue
+    // Workaround for Bootstrap's issue
     $('.btn-group .btn').click(function (event) {
         if ($(this).hasClass('disabled'))
             event.stopPropagation();
@@ -202,5 +190,38 @@
         }
         else
             pencil.removeClass('disabled');
+    }
+
+    // Save settings and start new game function
+    function startNewGame() {
+        var continents = [];
+        $('#continents div label input').each(function () {
+            if ($(this).is(':checked'))
+                continents.push($(this).val());
+        });
+        var allowedIds = [];
+        $('#non-sovereign-list div div label input').each(function () {
+            if ($(this).is(':checked'))
+                allowedIds.push($(this).val());
+        });
+
+        var settings = {
+            GameMode: $('#gameMode label.active input').val(),
+            Difficulty: $('#difficulty label.active input').val(),
+            DistractorsAmount: $('#answerOptions label.active input').val(),
+            TimeLimit: $('#timeLimit label.active input').val(),
+            AllowedNonSovereignIds: allowedIds,
+            Continents: continents
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: settings,
+            url: '@Url.Action(nameof(MenuController.SaveGameSettings), MenuController.Nameof)',
+            success: function (result) {
+                if(result == 'True')
+                    window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
+            }
+        });
     }
 </script>

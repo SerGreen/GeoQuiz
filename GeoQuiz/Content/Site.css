@@ -34,6 +34,11 @@ textarea {
   
 }
 
+/* Equal height for children inside div */
+div.equal-height-children {
+    display: flex;
+}
+
 /* Counters of correct and wrong answers */
 .numberCircle {
     border-radius: 50%;
@@ -142,6 +147,8 @@ textarea {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+  width: 50%;
+  min-width: 768px;
 }
 
 /* Color fix for checkbox and toggle button */

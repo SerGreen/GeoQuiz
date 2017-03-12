@@ -29,5 +29,12 @@ namespace GeoQuiz.Controllers
             settings.GameMode = gameMode;
             return RedirectToAction(nameof(QuizController.Index), QuizController.Nameof);
         }
+
+        [HttpPost]
+        public bool SaveGameSettings(GameSettings settings)
+        {
+            var boob = 8008;
+            return true;
+        }
     }
 }

@@ -60,64 +60,53 @@
     });
 </script>
 
-<!-- LEFT WELL -->
-<div class="col-sm-2 well same-height">
-    <div class="text-center">
-        <div class="row" style="font-size:large">
-            Question <span id="current-question-index">@(Model.Index + 1)</span> / @Model.TotalQuestionsCount
-            <div id="progressbar" style="width:100%; height:8px;"></div>
+<div class="equal-height-children">
+    <!-- LEFT WELL -->
+    <div class="col-sm-2 well">
+        <div class="text-center">
+            <div class="row" style="font-size:large">
+                Question <span id="current-question-index">@(Model.Index + 1)</span> / @Model.TotalQuestionsCount
+                <div id="progressbar" style="width:100%; height:8px;"></div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="numberCircle" style="margin:auto; border-color:#4CAF50"><span id="correct-answers">@Model.CorrectAnswers</span></div>
+                Correct answers
+            </div>
+            <hr />
+            <div class="row">
+                <div class="numberCircle" style="margin:auto; border-color:#F44336"><span id="wrong-answers">@Model.WrongAnswers</span></div>
+                Wrong answers
+            </div>
+        </div>
+    </div>
+
+    <!-- MIDDLE WELL -->
+    <div id="question-container" class="col-xs-offset-1 col-xs-6 well">
+        @Html.Partial("PartialFlagByCountry", Model)
+    </div>
+
+    <!-- RIGHT WELL -->
+    <div class="col-sm-offset-1 col-sm-2 well text-center">
+        <div class="row">
+            <div id="timer" style="width:68px; height:68px; position:relative; margin:auto"></div>
+            Time left
+        </div>
+        <hr />
+        <div class="row" style="position:initial">
+            <div id="reward-tag">+<span>@Model.PointsReward</span></div>
+            <div id="score">@Model.Score</div>
+            Score
         </div>
         <hr />
         <div class="row">
-            <div class="numberCircle" style="margin:auto; border-color:#4CAF50"><span id="correct-answers">@Model.CorrectAnswers</span></div>
-            Correct answers
-        </div>
-        <hr />
-        <div class="row">
-            <div class="numberCircle" style="margin:auto; border-color:#F44336"><span id="wrong-answers">@Model.WrongAnswers</span></div>
-            Wrong answers
+            <div id="streak" style="font-size:0px">
+                ×<span>0</span>
+                <div>Streak</div>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- MIDDLE WELL -->
-<div id="question-container" class="col-xs-offset-1 col-xs-6 well same-height">
-    @Html.Partial("PartialFlagByCountry", Model)
-</div>
-
-<!-- RIGHT WELL -->
-<div class="col-sm-offset-1 col-sm-2 well same-height text-center">
-    <div class="row">
-        <div id="timer" style="width:68px; height:68px; position:relative; margin:auto"></div>
-        Time left
-    </div>
-    <hr />
-    <div class="row" style="position:initial">
-        <div id="reward-tag">+<span>@Model.PointsReward</span></div>
-        <div id="score">@Model.Score</div>
-        Score
-    </div>
-    <hr />
-    <div class="row">
-        <div id="streak" style="font-size:0px">
-            ×<span>0</span>
-            <div>Streak</div>
-        </div>
-    </div>
-</div>
-
-<!-- Script that sets same height to all wells -->
-<script>
-    $(document).ready(function() {
-        var max = 0;
-        // Getting the greatest height
-        $('.same-height').each(function () {
-            max = ($(this).height() > max) ? $(this).height() : max;
-        });
-        // Applying the greatest height to each element
-        $('.same-height').height(max);
-    });
-</script>
 
 <!-- AJAX submit answer function. It is used by Partial Views in Middle Well. It returns partial view with new question's HTML code. -->
 <script>
@@ -137,7 +126,7 @@
         $.ajax({
             type: 'POST',
             data: data,
-            url: '@Url.Action("Quiz", "Quiz")',
+            url: '@Url.Action(nameof(QuizController.Quiz), QuizController.Nameof)',
             success: function (result) {
                 // Display new question
                 $("#question-container").html(result);
@@ -194,7 +183,7 @@
 
                 // If game is over => wait 3 seconds and reirect to results page
                 if ($('#game-over', result).length) {
-                    setTimeout(function() { window.location.href = '@Url.Action("Results")'; }, 3000);
+                    setTimeout(function() { window.location.href = '@Url.Action(nameof(QuizController.Results))'; }, 3000);
                 }
                     // Reset timer
                 else if(@Model.TimeLimit > 0)
