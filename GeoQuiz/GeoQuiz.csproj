@@ -429,6 +429,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\GameSettingsModelBinder.cs" />
+    <Compile Include="Infrastructure\GameSettingsSave.cs" />
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\QuestionsModelBinder.cs" />
     <Compile Include="Models\GameSettings.cs" />

@@ -20,10 +20,6 @@ namespace GeoQuiz.Controllers
         [HttpGet]
         public ActionResult Index(GameSettings settings)
         {
-            settings.Continents = new List<string>() { "AU" };
-            settings.TimeLimit = 20;
-            settings.DistractorsAmount = 5;
-
             switch (settings.GameMode)
             {
                 case GameMode.FlagByCountry:
@@ -31,7 +27,7 @@ namespace GeoQuiz.Controllers
                 case GameMode.CountryByFlag:
                 case GameMode.CapitalByCountry:
                 default:
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(MenuController.Index), MenuController.Nameof);
             }
         }
         

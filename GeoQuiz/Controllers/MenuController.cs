@@ -31,10 +31,10 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpPost]
-        public bool SaveGameSettings(GameSettings settings)
+        public void SaveGameSettings(Infrastructure.GameSettingsSave settings)
         {
-            var boob = 8008;
-            return true;
+            // GameSettingsSave is built by deafult model binder from data provided by ajax request, instead of retrieving from Session by custom GameSettings model binder
+            Session["Settings"] = settings;
         }
     }
 }

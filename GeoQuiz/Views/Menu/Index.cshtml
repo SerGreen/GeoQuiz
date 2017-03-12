@@ -218,9 +218,8 @@
             type: 'POST',
             data: settings,
             url: '@Url.Action(nameof(MenuController.SaveGameSettings), MenuController.Nameof)',
-            success: function (result) {
-                if(result == 'True')
-                    window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
+            success: function () {
+                window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
             }
         });
     }
