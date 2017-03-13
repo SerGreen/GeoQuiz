@@ -7,7 +7,7 @@
     {
         mistakeText = mistake == "Timeout"
             ? $"You ran out of time!"
-            : $"Wrong! It was flag of {mistake}";
+            : $"Wrong! That was flag of {mistake}";
     }
 
     double columns = 0, rows = 0;
@@ -26,7 +26,10 @@
 
 @if (!gameOver)
 {
-    <h2 class="text-center">Select flag of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
+    <h3 class="text-center">What country does this flag belong to?</h3>
+    <div class="col-sm-offset-4 col-sm-4">
+        <img class="img-thumbnail" src="~/Content/Flags/@(Model.Question.QuestionString).png" />
+    </div>
     <hr />
 
     <div>
@@ -36,7 +39,9 @@
                 @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
                 {
                     <div class="col-xs-@(12 / columns) hover-highlight answer-option">
-                        <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[currentChoice])" class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[currentChoice]).png" name="submit" />
+                        <div onclick="submitAnswerAjax(@Model.Index, '@Model.Question.Choices[currentChoice]')">
+                            @(Model.Question.Choices[currentChoice])
+                        </div>
                     </div>
                 }
             </div>

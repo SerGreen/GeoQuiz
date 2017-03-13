@@ -16,9 +16,21 @@ textarea {
     max-width: 280px;
 }
 
+/* Vertically centered div */
 .center-div {
     display: table;
     margin: 0 auto;
+}
+.vcenter-parent {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  height: 100%;
+}
+.vcenter-this {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Vertical divider between col- blocks */
@@ -58,6 +70,9 @@ div.equal-height-children {
 .timer-text {
     font-size: xx-large;
 }
+.timer-infinity {
+    font-size: 400%;
+}
 
 /* Answer options styling */
 .hover-highlight {
@@ -70,6 +85,14 @@ div.equal-height-children {
 .answer-option {
     margin: 16px 0px;
     padding: 8px 5px 5px;
+    font-size: x-large;
+    border: 1px solid #eee;
+    border-radius: 2px;
+}
+.answer-option:hover {
+    color: #009688;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 /* Style for score counter in game */
@@ -129,6 +152,18 @@ div.equal-height-children {
 }
 .center-ul ul {
     list-style: none;
+}
+
+/* Continuous rotation */
+.rotate {
+    animation-name: rotate; 
+    animation-duration: 2s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes rotate {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
 }
 
 /* Modal centered vertically */

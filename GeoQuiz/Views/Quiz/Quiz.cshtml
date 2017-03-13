@@ -34,7 +34,7 @@
             trailWidth: 6,
             duration: @(Model.TimeLimit * 1000),
             text: {
-                className: 'timer-text',
+                className: '@(Model.TimeLimit == 0 ? "timer-infinity" : "timer-text")',
                 autoStyleContainer: false
             },
             from: { color: '#F44336' },
@@ -83,7 +83,18 @@
 
     <!-- MIDDLE WELL -->
     <div id="question-container" class="col-xs-offset-1 col-xs-6 well">
-        @Html.Partial("PartialFlagByCountry", Model)
+        @switch (Model.GameMode)
+        {
+            case GeoQuiz.Models.Shared.GameMode.FlagByCountry:
+                Html.RenderPartial("PartialFlagByCountry", Model);
+                break;
+            case GeoQuiz.Models.Shared.GameMode.CountryByFlag:
+                Html.RenderPartial("PartialCountryByFlag", Model);
+                break;
+            case GeoQuiz.Models.Shared.GameMode.CapitalByCountry:
+                Html.RenderPartial("PartialCapitalByCountry", Model);
+                break;
+        }
     </div>
 
     <!-- RIGHT WELL -->
@@ -100,7 +111,7 @@
         </div>
         <hr />
         <div class="row">
-            <div id="streak" style="font-size:0px">
+            <div id="streak" style="transform:rotateX(90deg)">
                 ×<span>0</span>
                 <div>Streak</div>
             </div>
@@ -111,14 +122,14 @@
 <!-- AJAX submit answer function. It is used by Partial Views in Middle Well. It returns partial view with new question's HTML code. -->
 <script>
     function submitAnswerAjax(questionIndex, answer) {
-        // Stop timer
-        timer.stop();
+            // Stop timer
+            timer.stop();
 
-        // Get potential score points reward value
-        var reward = $('#reward').text();
+            // Get potential score points reward value
+            var reward = $('#reward').text();
 
-        // Send request
-        var data = {
+            // Send request
+            var data = {
             questionIndex: questionIndex,
             answer: answer
         };
@@ -156,7 +167,7 @@
                     setTimeout(function () { $('#wrong-answers').css('font-size', ''); }, 150);
 
                     // Hide streak counter
-                    $('#streak').css('font-size', '0px');
+                    $('#streak').css('transform', 'rotateX(90deg)');
 
                     // Display snackbar
                     var options = {
@@ -165,7 +176,7 @@
                     }
                     $.snackbar(options);
                 }
-                    // If no mistake
+                // If no mistake
                 else {
                     // Make number of correct answers and streak counter jump
                     $('#correct-answers').css('font-size', '42px');
@@ -173,6 +184,7 @@
 
                     if(streak > 1)
                     {
+                        $('#streak').css('transform', 'rotateX(0deg)');
                         $('#streak').css('font-size', '48px');
                         setTimeout(function () { $('#streak').css('font-size', ''); }, 150);
                     }
@@ -183,9 +195,24 @@
 
                 // If game is over => wait 3 seconds and reirect to results page
                 if ($('#game-over', result).length) {
-                    setTimeout(function() { window.location.href = '@Url.Action(nameof(QuizController.Results))'; }, 3000);
+                    setTimeout(function() { window.location.href = '@Url.Action(nameof(QuizController.Results))'; }, 2000);
+
+                    // Display loading animation
+                    loading = new ProgressBar.Circle('#loading', {
+                        strokeWidth: 6,
+                        trailWidth: 6,
+                        color: '#eee',
+                        trailColor: '#bbb',
+                        text: {
+                            value: 'Loading...'
+                        }
+                    });
+                    $(loading.text).css('color', '#bbb');
+                    loading.set(0.8);
+                    $('#loading').css('opacity', '1');
+                    $('#loading svg').css('transition', 'all 8s linear').css('transform', 'rotate(360deg)');
                 }
-                    // Reset timer
+                // Reset timer
                 else if(@Model.TimeLimit > 0)
                 {
                     timer.set(1.0);

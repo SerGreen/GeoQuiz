@@ -1,7 +1,7 @@
 ﻿@model GeoQuiz.Models.ResultsViewModel
 
 @{
-    ViewBag.Title = "Results";
+    ViewBag.Title = "GeoQuiz : Results";
 }
 
 <div class="col-sm-12 well">
@@ -97,8 +97,10 @@
                 setTimeout(function () { stars.setRating(rating + 1); }, 500);
             else {
                 // If results are flawless, then throw confetti \o/
-                if (correctAnswerPercent == 1)
+                if (correctAnswerPercent == 1) {
                     confetti.start();
+                    rotateStars();
+                }
 
                 // Animate small gauges
                 setTimeout(function () {
@@ -238,5 +240,18 @@
         percentCircle.animate(correctAnswerPercent, null, function () {
             setTimeout(function () { stars.setRating(1); }, 1200);
         });
+
+        // Rotate stars
+        function rotateStars() {
+            var delay = 0;
+            $('#rating-stars li').each(function() {
+                rotateThis(this, delay);
+                delay += 200;
+            });
+
+            function rotateThis(star, delay) {
+                setTimeout(function() { $(star).addClass('rotate') }, delay);
+            }
+        }
     });
 </script>
