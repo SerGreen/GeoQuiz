@@ -1,13 +1,12 @@
-﻿@model GeoQuiz.Models.ResultsViewModel
+﻿@using GeoQuiz.Models.Shared
+@model GeoQuiz.Models.ResultsViewModel
 
 @{
     ViewBag.Title = "GeoQuiz : Results";
 }
 
 <div class="col-sm-12 well">
-    <div class="row text-center">
-        <h1>Well done!</h1>
-    </div>
+    <h1 class="text-center">Well done!</h1>
     <hr />
     <div class="row text-center">
         <div class="col-sm-offset-3 col-sm-3">
@@ -44,15 +43,16 @@
         </div>
     </div>
     <hr />
+    <h3 class="text-center text-muted">@(Model.GameSettings.GameMode == GameMode.FlagByCountry ? "Flags" : Model.GameSettings.GameMode == GameMode.CountryByFlag ? "Countries" : "Capitals") game mode</h3>
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6 result-small-text center-ul">
             <ul class="text-muted">
                 <li>@GeoQuiz.Infrastructure.Helpers.GetContinentsList(Model.GameSettings.Continents)</li>
             </ul>
             <ul style="columns:2" class="text-muted">
-                <li>@(Model.GameSettings.TimeLimit == 0 ? "Unlimited time" : $"Time limit: {Model.GameSettings.TimeLimit}s")</li>
-                <li>Difficulty: @Model.GameSettings.Difficulty</li>
-                <li>Answer options: @(Model.GameSettings.DistractorsAmount + 1)</li>
+                <li>@(Model.GameSettings.TimeLimit == 0 ? "Unlimited time" : $"Time limit: {Model.GameSettings.TimeLimit} sec")</li>
+                <li>Difficulty: @Model.GameSettings.Difficulty.ToString().ToSentence().ToLower()</li>
+                <li>Answer options: @(Model.GameSettings.DistractorsAmount > 0 ? (Model.GameSettings.DistractorsAmount + 1).ToString() : "none")</li>
                 <li>Questions total: @Model.Questions.Count</li>
             </ul>
         </div>

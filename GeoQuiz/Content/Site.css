@@ -161,6 +161,7 @@ div.equal-height-children {
 }
 .center-ul ul {
     list-style: none;
+    padding-left: 0px;
 }
 
 /* Continuous rotation */

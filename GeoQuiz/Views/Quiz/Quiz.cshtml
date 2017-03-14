@@ -96,7 +96,6 @@
                 break;
         }
     </div>
-    <script>hookEnterToSubmitAnswer();</script>
 
     <!-- RIGHT WELL -->
     <div class="col-sm-offset-1 col-sm-2 well text-center">
@@ -221,7 +220,6 @@
                     });
                 }
 
-                // Hook enter key to submit answer click in type-in mode
                 hookEnterToSubmitAnswer();
             }
         });
@@ -229,16 +227,19 @@
     
     function submitAnswerBtnClick() {
         var answer = $('#answer-input').val();
-        submitAnswerAjax(@Model.Index, answer);
+        if(answer.length > 0)
+            submitAnswerAjax(@Model.Index, answer);
     }
 
+    // Hook enter key to submit answer click in type-in mode
     function hookEnterToSubmitAnswer() {
         $("#answer-input").keyup(function (event) {
             if (event.keyCode == 13) {
                 $("#submit-answer-btn").click();
             }
-        });
+        }).focus();
     }
+    hookEnterToSubmitAnswer();
 </script>
 
 <!-- Score animation script -->

@@ -26,6 +26,7 @@ namespace GeoQuiz.Controllers
                 case GameMode.CountryByFlag:
                     return StartCountryByFlagGame(settings);
                 case GameMode.CapitalByCountry:
+                    return StartCapitalByCountryGame(settings);
                 default:
                     return RedirectToAction(nameof(MenuController.Index), MenuController.Nameof);
             }
@@ -97,6 +98,34 @@ namespace GeoQuiz.Controllers
                     .Shuffle()
                     .Take(settings.DistractorsAmount)
                     .Select(x => x.Country1.Name)
+                    .ToArray();
+
+                questions.Add(new QuestionAnswerPair(question, answer, distractors));
+            }
+
+            QuestionsList questionsList = new QuestionsList(questions);
+            Session["Questions"] = questionsList;
+            return View(nameof(Quiz), GetQuestionViewModel(questionsList));
+        }
+
+        [NonAction]
+        private ActionResult StartCapitalByCountryGame(GameSettings settings)
+        {
+            List<Country> countries = GetSelectedCountries(settings);
+
+            // Assemble questions for each country
+            int calculatedDistractorsAmount = Math.Max((int) settings.Difficulty, settings.DistractorsAmount);
+            List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
+            foreach (Country c in countries)
+            {
+                string question = c.Name;
+                string answer = c.Capital;
+                // Everything as in flags mode, but now question is country ID (flag image selected by id) and answer and distractors are country names
+                string[] distractors = countries
+                    .Where(x => x.Id != c.Id)
+                    .Shuffle()
+                    .Take(settings.DistractorsAmount)
+                    .Select(x => x.Capital)
                     .ToArray();
 
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));

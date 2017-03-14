@@ -49,5 +49,14 @@ namespace GeoQuiz.Models.Shared
 
             return elements as IEnumerable<T>;
         }
+
+        /// <summary>
+        /// Inserts spaces in capitalized CamelCase.
+        /// 'FooBarTar' => 'Foo Bar Tar'
+        /// </summary>
+        public static string ToSentence(this string input)
+        {
+            return new string(input.ToCharArray().SelectMany((c, i) => i > 0 && char.IsUpper(c) ? new char[] { ' ', c } : new char[] { c }).ToArray());
+        }
     }
 }
