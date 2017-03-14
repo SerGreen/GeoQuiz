@@ -9,13 +9,6 @@
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 /* Vertically centered div */
 .center-div {
     display: table;
@@ -85,11 +78,27 @@ div.equal-height-children {
 .answer-option {
     margin: 16px 0px;
     padding: 8px 5px 5px;
+}
+/* Text answers (Countries and Capitals) */
+.answer-option-row {
+    width: 100%;
+    margin: 0px 0px;
+}
+.answer-option-text {
+    padding: 20px 5px;
     font-size: x-large;
     border: 1px solid #eee;
     border-radius: 2px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
-.answer-option:hover {
+.answer-option-text-outer {
+    margin: 0px 0px;
+    padding: 8px 8px;
+}
+.answer-option-text:hover {
     color: #009688;
     font-weight: 500;
     cursor: pointer;
@@ -244,4 +253,14 @@ div.equal-height-children {
     visibility: visible;
     opacity: 1;
     transition: all 300ms;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    cursor: default;
 }

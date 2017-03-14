@@ -17,7 +17,7 @@
     {
         // Caclulate grid size for answer choices
         double sqrt = Math.Sqrt(Model.Question.Choices.Length);
-        columns = Math.Ceiling(sqrt);
+        columns = Math.Min(3, Math.Ceiling(sqrt));
         rows = Math.Ceiling(Model.Question.Choices.Length / columns);
     }
 
@@ -27,26 +27,47 @@
 @if (!gameOver)
 {
     <h3 class="text-center">What country does this flag belong to?</h3>
-    <div class="col-sm-offset-4 col-sm-4">
-        <img class="img-thumbnail" src="~/Content/Flags/@(Model.Question.QuestionString).png" />
+    <div class="row">
+        <div class="col-sm-offset-4 col-sm-4">
+            <img class="img-thumbnail" src="~/Content/Flags/@(Model.Question.QuestionString).png" />
+        </div>
     </div>
     <hr />
 
-    <div>
-        @for (int i = 0; i < rows; i++)
-        {
-            <div class="row text-center">
-                @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
-                {
-                    <div class="col-xs-@(12 / columns) hover-highlight answer-option">
-                        <div onclick="submitAnswerAjax(@Model.Index, '@Model.Question.Choices[currentChoice]')">
-                            @(Model.Question.Choices[currentChoice])
+    if (Model.Question.Choices.Length > 1)
+    {
+        <div>
+            @for (int i = 0; i < rows; i++)
+            {
+                <div class="row text-center equal-height-children answer-option-row">
+                    @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
+                    {
+                        <div class="col-xs-@(12 / columns) answer-option-text-outer">
+                            <div class="col-sm-12 hover-highlight answer-option-text" onclick="submitAnswerAjax(@Model.Index, '@Model.Question.Choices[currentChoice]')">
+                                @(Model.Question.Choices[currentChoice])
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-offset-1 col-sm-10">
+            <div class="form-group is-empty">
+                <div class="input-group">
+                    <span class="input-group-addon noselect" unselectable="on"><i class="material-icons">create</i></span>
+                    <input id="answer-input" class="form-control" placeholder="Type your answer" type="text" autofocus>
+                    <span class="input-group-btn">
+                        <button id="submit-answer-btn" type="button" class="btn btn-fab btn-fab-mini" onclick="submitAnswerBtnClick()">
+                            <i class="material-icons" style="padding-left:2px;color:#555">send</i>
+                        </button>
+                    </span>
+                </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 }
 else
 {

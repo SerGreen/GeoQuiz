@@ -96,6 +96,7 @@
                 break;
         }
     </div>
+    <script>hookEnterToSubmitAnswer();</script>
 
     <!-- RIGHT WELL -->
     <div class="col-sm-offset-1 col-sm-2 well text-center">
@@ -144,7 +145,6 @@
 
                 // jQuery can't find anything if result is not inside <div>
                 result = '<div>' + result + '</div>';
-
 
                 // Update progress bar and counters
                 var current = $('#questionIndex', result).text();
@@ -220,6 +220,22 @@
                         submitAnswerAjax(@Model.Index, null);
                     });
                 }
+
+                // Hook enter key to submit answer click in type-in mode
+                hookEnterToSubmitAnswer();
+            }
+        });
+    }
+    
+    function submitAnswerBtnClick() {
+        var answer = $('#answer-input').val();
+        submitAnswerAjax(@Model.Index, answer);
+    }
+
+    function hookEnterToSubmitAnswer() {
+        $("#answer-input").keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#submit-answer-btn").click();
             }
         });
     }

@@ -23,7 +23,7 @@ namespace GeoQuiz
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
-                      "~/Scripts/jquery.validate*",
+         //           "~/Scripts/jquery.validate*",
                       "~/Scripts/modernizr-*",
                       "~/Scripts/respond.js",
                       "~/Scripts/progressbar.js",

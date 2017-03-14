@@ -458,6 +458,7 @@
     <Content Include="Views\Quiz\Results.cshtml" />
     <Content Include="Views\Menu\PartialNonSovereignModal.cshtml" />
     <Content Include="Views\Quiz\PartialCountryByFlag.cshtml" />
+    <Content Include="Views\Quiz\PartialCapitalByCountry.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

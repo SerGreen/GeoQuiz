@@ -22,6 +22,6 @@ namespace GeoQuiz.Models
             Question = new Question(question, choices.ToArray());
         }
 
-        public bool TestAnswer(string answer) => answer == Answer;
+        public bool TestAnswer(string answer) => answer.Equals(Answer, StringComparison.InvariantCultureIgnoreCase);
     }
 }

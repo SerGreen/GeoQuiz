@@ -132,7 +132,7 @@ namespace GeoQuiz.Controllers
             string correctAnswer = questions.CorrectAnswer;
 
             // Check answer given by player and go to next question
-            if (questions.TestAnswer(answer, true /* next question */) == false)
+            if (questions.TestAnswer(answer, true /* switch to next question */) == false)
             {
                 // If answer is wrong => set mistake message
                 // No answer = timeout
@@ -177,21 +177,6 @@ namespace GeoQuiz.Controllers
                 }
 
                 return PartialView(partialViewName, GetQuestionViewModel(questions));
-            }
-        }
-
-        private string GetMistakeMessage(string answer, GameMode gameMode)
-        {
-            switch (gameMode)
-            {
-                case GameMode.FlagByCountry:
-                    return db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
-                case GameMode.CountryByFlag:
-                    return db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
-                case GameMode.CapitalByCountry:
-                    return db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name;
-                default:
-                    return "Unknown";
             }
         }
 
