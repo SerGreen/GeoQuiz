@@ -192,28 +192,54 @@
             if ($(this).is(':checked'))
                 continents.push($(this).val());
         });
-        var allowedIds = [];
-        $('#non-sovereign-list div div label input').each(function () {
-            if ($(this).is(':checked'))
-                allowedIds.push($(this).val());
-        });
 
-        var settings = {
-            GameMode: $('#gameMode label.active input').val(),
-            Difficulty: $('#difficulty label.active input').val(),
-            DistractorsAmount: $('#answerOptions label.active input').val(),
-            TimeLimit: $('#timeLimit label.active input').val(),
-            AllowedNonSovereignIds: allowedIds,
-            Continents: continents
-        };
+        // Check if any continent is selected
+        // If not => draw attention to continents checkboxes
+        if (continents.length == 0)
+            noticeMeSenpai();
+        // Else start the game
+        else {
+            var allowedIds = [];
+            $('#non-sovereign-list div div label input').each(function () {
+                if ($(this).is(':checked'))
+                    allowedIds.push($(this).val());
+            });
 
-        $.ajax({
-            type: 'POST',
-            data: settings,
-            url: '@Url.Action(nameof(MenuController.SaveGameSettings), MenuController.Nameof)',
-            success: function () {
-                window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
-            }
-        });
+            var settings = {
+                GameMode: $('#gameMode label.active input').val(),
+                Difficulty: $('#difficulty label.active input').val(),
+                DistractorsAmount: $('#answerOptions label.active input').val(),
+                TimeLimit: $('#timeLimit label.active input').val(),
+                AllowedNonSovereignIds: allowedIds,
+                Continents: continents
+            };
+
+            $.ajax({
+                type: 'POST',
+                data: settings,
+                url: '@Url.Action(nameof(MenuController.SaveGameSettings), MenuController.Nameof)',
+                success: function () {
+                    window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
+                }
+            });
+        }
     }
+</script>
+
+<!-- Draw attention to continents script -->
+<script>
+    var continentsCheckboxes;
+    function noticeMeSenpai() {
+        // I can't believe it, but this actually does not work with the for loop. Wow.
+        var delay = 50;
+        continentsCheckboxes[0].focus();
+        setTimeout(function () { continentsCheckboxes[1].focus() }, delay);
+        setTimeout(function () { continentsCheckboxes[2].focus() }, delay*2);
+        setTimeout(function () { continentsCheckboxes[3].focus() }, delay*3);
+        setTimeout(function () { continentsCheckboxes[4].focus() }, delay*4);
+        setTimeout(function () { continentsCheckboxes[5].focus() }, delay*5);
+    };
+    $(document).ready(function () {
+        continentsCheckboxes = $('#continents .checkbox label input');
+    });
 </script>

@@ -1,6 +1,27 @@
-﻿body {
+﻿/* Footer always at bottom and spacing above navbar */
+body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    margin: 0;
+    padding-bottom: 4rem;
+    position:relative;
+    min-height: 100%;
+}
+footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+}
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -257,11 +278,18 @@ div.equal-height-children {
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     cursor: default;
+}
+
+/* Selection color */
+::-moz-selection {
+    background: rgba(0, 150, 136, 0.15);
+}
+::selection {
+    background: rgba(0, 150, 136, 0.15);
+    color: #FFF;
 }
