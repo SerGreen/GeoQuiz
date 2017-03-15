@@ -293,3 +293,15 @@ div.equal-height-children {
     background: rgba(0, 150, 136, 0.15);
     color: #FFF;
 }
+
+/* Select/deselect all btn fab */
+#select-all-btn {
+    position:absolute;
+    margin-left:100%;
+    transform:translateX(-80px);
+    z-index:1;
+}
+#select-all-btn img {
+    width:50%;
+    height:50%;
+}

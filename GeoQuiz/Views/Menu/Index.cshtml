@@ -107,6 +107,7 @@
     <div class="well col-sm-offset-1 col-sm-3">
         <h4 class="text-muted text-center">Continents</h4>
         <hr />
+        <button id="select-all-btn" class="btn btn-primary btn-fab btn-fab-mini" type="button"><img src="~/img/deselect-all.svg"></button>
         <div id="continents">
             @for (int i = 0; i < allContinents.Length; i++)
             {
@@ -226,9 +227,10 @@
     }
 </script>
 
-<!-- Draw attention to continents script -->
+<!-- Continents checkboxes and button script -->
 <script>
     var continentsCheckboxes;
+    var selectAllContinentsBtn = $('#select-all-btn');
     function noticeMeSenpai() {
         // I can't believe it, but this actually does not work with the for loop. Wow.
         var delay = 50;
@@ -239,7 +241,41 @@
         setTimeout(function () { continentsCheckboxes[4].focus() }, delay*4);
         setTimeout(function () { continentsCheckboxes[5].focus() }, delay*5);
     };
+    function checkAllContinentsOn() {
+        var countChecked = 0;
+        continentsCheckboxes.each(function () {
+            if ($(this).is(':checked'))
+                countChecked++;
+        });
+
+        return countChecked == continentsCheckboxes.length;
+    }
+    function setIconAllContinentsBtn() {
+        if (checkAllContinentsOn())
+            selectAllContinentsBtn.find('img').attr('src', '/img/deselect-all.svg');
+        else
+            selectAllContinentsBtn.find('img').attr('src', '/img/select-all.svg');
+    }
+
     $(document).ready(function () {
         continentsCheckboxes = $('#continents .checkbox label input');
+        continentsCheckboxes.each(function () {
+            $(this).parent().click(function () {
+                setIconAllContinentsBtn();
+            });
+        });
+
+        selectAllContinentsBtn.click(function () {
+            var allOn = checkAllContinentsOn();
+            continentsCheckboxes.each(function () {
+                if (allOn)
+                    $(this).prop('checked', false);
+                else
+                    $(this).prop('checked', true);
+            });
+            setIconAllContinentsBtn();
+        });
+
+        setIconAllContinentsBtn();
     });
 </script>
