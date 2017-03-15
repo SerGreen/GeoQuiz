@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    string lang = Session["Language"] as string;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,8 +25,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof)" class="navbar-brand" style="font-size:xx-large"><span class="glyphicon glyphicon-globe" id="geo-icon"></span> GeoQuiz</a>
+                <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { language = lang })" class="navbar-brand" style="font-size:xx-large"><span class="glyphicon glyphicon-globe" id="geo-icon"></span> GeoQuiz</a>
             </div>
+            <ul class="nav navbar-nav" style="float: right">
+                <li><a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { language = lang == "RU" ? "EN" : "RU" })" class="navbar-link pull-right btn" style="margin:0">@lang</a></li>
+            </ul>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>

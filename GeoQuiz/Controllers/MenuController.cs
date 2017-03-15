@@ -17,13 +17,14 @@ namespace GeoQuiz.Controllers
 
         // GET: Menu
         [HttpGet]
-        public ActionResult Index(GameSettings settings)
+        public ActionResult Index(GameSettings settings, string language = "EN")
         {
+            Session["Language"] = language;
             return View(settings);
         }
 
         [HttpPost]
-        [ActionName("Index")]
+        [ActionName(nameof(Index))]
         public ActionResult IndexPost(GameSettings settings, GameMode gameMode = GameMode.FlagByCountry)
         {
             settings.GameMode = gameMode;

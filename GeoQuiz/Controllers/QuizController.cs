@@ -44,6 +44,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartFlagByCountryGame(GameSettings settings)
         {
+            string language = Session["Language"] as string;
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -51,7 +52,8 @@ namespace GeoQuiz.Controllers
             List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
             foreach (Country c in countries)
             {
-                string question = c.Name;
+                // Get localized name or default one if localization is missing
+                string question = c.Localizations.Where(x => x.Language == language).Select(x => x.Name).FirstOrDefault() ?? c.Name;
                 string answer = c.Id.ToString();
                 // Select distractors: 
                 // 1. Select all similar flags and order by similarity
@@ -79,6 +81,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartCountryByFlagGame(GameSettings settings)
         {
+            string language = Session["Language"] as string;
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -87,7 +90,9 @@ namespace GeoQuiz.Controllers
             foreach (Country c in countries)
             {
                 string question = c.Id.ToString();
-                string answer = c.Name;
+                var a = c.Localizations.Where(x => x.Language == language).Select(x => x.Name);
+                var b = a.FirstOrDefault();
+                string answer = c.Localizations.Where(x => x.Language == language).Select(x => x.Name).FirstOrDefault() ?? c.Name;
                 // Everything as in flags mode, but now question is country ID (flag image selected by id) and answer and distractors are country names
                 string[] distractors = db.FlagNeighbours
                     .Where(fn => fn.CountryId1 == c.Id &&
@@ -97,7 +102,7 @@ namespace GeoQuiz.Controllers
                     .Take(calculatedDistractorsAmount)
                     .Shuffle()
                     .Take(settings.DistractorsAmount)
-                    .Select(x => x.Country1.Name)
+                    .Select(x => x.Country1.Localizations.Where(z => z.Language == language).Select(z => z.Name).FirstOrDefault() ?? x.Country1.Name)
                     .ToArray();
 
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));
@@ -111,6 +116,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartCapitalByCountryGame(GameSettings settings)
         {
+            string language = Session["Language"] as string;
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -118,14 +124,14 @@ namespace GeoQuiz.Controllers
             List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
             foreach (Country c in countries)
             {
-                string question = c.Name;
-                string answer = c.Capital;
+                string question = c.Localizations.Where(x => x.Language == language).Select(x => x.Name).FirstOrDefault() ?? c.Name;
+                string answer = c.Localizations.Where(x=>x.Language == language).Select(x=>x.Capital).FirstOrDefault() ?? c.Capital;
                 // Everything as in flags mode, but now question is country ID (flag image selected by id) and answer and distractors are country names
                 string[] distractors = countries
                     .Where(x => x.Id != c.Id)
                     .Shuffle()
                     .Take(settings.DistractorsAmount)
-                    .Select(x => x.Capital)
+                    .Select(x => x.Localizations.Where(z => z.Language == language).Select(z => z.Capital).FirstOrDefault() ?? x.Capital)
                     .ToArray();
 
                 questions.Add(new QuestionAnswerPair(question, answer, distractors));

@@ -36,6 +36,9 @@ namespace GeoQuiz.Database.DatabaseClasses
     partial void InsertFlagNeighbour(FlagNeighbour instance);
     partial void UpdateFlagNeighbour(FlagNeighbour instance);
     partial void DeleteFlagNeighbour(FlagNeighbour instance);
+    partial void InsertLocalization(Localization instance);
+    partial void UpdateLocalization(Localization instance);
+    partial void DeleteLocalization(Localization instance);
     #endregion
 		
 		public GeoDBDataContext() : 
@@ -83,6 +86,14 @@ namespace GeoQuiz.Database.DatabaseClasses
 				return this.GetTable<FlagNeighbour>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Localization> Localizations
+		{
+			get
+			{
+				return this.GetTable<Localization>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Countries")]
@@ -105,6 +116,8 @@ namespace GeoQuiz.Database.DatabaseClasses
 		
 		private EntitySet<FlagNeighbour> _FlagNeighbours1;
 		
+		private EntitySet<Localization> _Localizations;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -125,6 +138,7 @@ namespace GeoQuiz.Database.DatabaseClasses
 		{
 			this._FlagNeighbours = new EntitySet<FlagNeighbour>(new Action<FlagNeighbour>(this.attach_FlagNeighbours), new Action<FlagNeighbour>(this.detach_FlagNeighbours));
 			this._FlagNeighbours1 = new EntitySet<FlagNeighbour>(new Action<FlagNeighbour>(this.attach_FlagNeighbours1), new Action<FlagNeighbour>(this.detach_FlagNeighbours1));
+			this._Localizations = new EntitySet<Localization>(new Action<Localization>(this.attach_Localizations), new Action<Localization>(this.detach_Localizations));
 			OnCreated();
 		}
 		
@@ -254,6 +268,19 @@ namespace GeoQuiz.Database.DatabaseClasses
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Country_Localization", Storage="_Localizations", ThisKey="Id", OtherKey="CountryId")]
+		public EntitySet<Localization> Localizations
+		{
+			get
+			{
+				return this._Localizations;
+			}
+			set
+			{
+				this._Localizations.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -296,6 +323,18 @@ namespace GeoQuiz.Database.DatabaseClasses
 		{
 			this.SendPropertyChanging();
 			entity.Country1 = null;
+		}
+		
+		private void attach_Localizations(Localization entity)
+		{
+			this.SendPropertyChanging();
+			entity.Country = this;
+		}
+		
+		private void detach_Localizations(Localization entity)
+		{
+			this.SendPropertyChanging();
+			entity.Country = null;
 		}
 	}
 	
@@ -490,6 +529,181 @@ namespace GeoQuiz.Database.DatabaseClasses
 						this._CountryId2 = default(int);
 					}
 					this.SendPropertyChanged("Country1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Localization")]
+	public partial class Localization : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _Language;
+		
+		private int _CountryId;
+		
+		private string _Name;
+		
+		private string _Capital;
+		
+		private EntityRef<Country> _Country;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnLanguageChanging(string value);
+    partial void OnLanguageChanged();
+    partial void OnCountryIdChanging(int value);
+    partial void OnCountryIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnCapitalChanging(string value);
+    partial void OnCapitalChanged();
+    #endregion
+		
+		public Localization()
+		{
+			this._Country = default(EntityRef<Country>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Language", DbType="Char(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string Language
+		{
+			get
+			{
+				return this._Language;
+			}
+			set
+			{
+				if ((this._Language != value))
+				{
+					this.OnLanguageChanging(value);
+					this.SendPropertyChanging();
+					this._Language = value;
+					this.SendPropertyChanged("Language");
+					this.OnLanguageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountryId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int CountryId
+		{
+			get
+			{
+				return this._CountryId;
+			}
+			set
+			{
+				if ((this._CountryId != value))
+				{
+					if (this._Country.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCountryIdChanging(value);
+					this.SendPropertyChanging();
+					this._CountryId = value;
+					this.SendPropertyChanged("CountryId");
+					this.OnCountryIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Capital", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Capital
+		{
+			get
+			{
+				return this._Capital;
+			}
+			set
+			{
+				if ((this._Capital != value))
+				{
+					this.OnCapitalChanging(value);
+					this.SendPropertyChanging();
+					this._Capital = value;
+					this.SendPropertyChanged("Capital");
+					this.OnCapitalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Country_Localization", Storage="_Country", ThisKey="CountryId", OtherKey="Id", IsForeignKey=true)]
+		public Country Country
+		{
+			get
+			{
+				return this._Country.Entity;
+			}
+			set
+			{
+				Country previousValue = this._Country.Entity;
+				if (((previousValue != value) 
+							|| (this._Country.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Country.Entity = null;
+						previousValue.Localizations.Remove(this);
+					}
+					this._Country.Entity = value;
+					if ((value != null))
+					{
+						value.Localizations.Add(this);
+						this._CountryId = value.Id;
+					}
+					else
+					{
+						this._CountryId = default(int);
+					}
+					this.SendPropertyChanged("Country");
 				}
 			}
 		}
