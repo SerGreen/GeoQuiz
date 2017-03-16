@@ -294,14 +294,25 @@ div.equal-height-children {
     color: #FFF;
 }
 
-/* Select/deselect all btn fab */
-#select-all-btn {
-    position:absolute;
-    margin-left:100%;
-    transform:translateX(-80px);
-    z-index:1;
+/* Select/deselect all buttons */
+#select-all-btn-continents {
+    position: absolute;
+    margin-left: 100%;
+    transform: translateX(-80px);
+    z-index: 1;
 }
-#select-all-btn img {
-    width:50%;
-    height:50%;
+#select-all-btn-continents img {
+    width: 50%;
+    height: 50%;
+}
+.non-sovereign-col {
+    padding-bottom: 40px;
+}
+.bottomaligned {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    margin-bottom: 7px;
 }

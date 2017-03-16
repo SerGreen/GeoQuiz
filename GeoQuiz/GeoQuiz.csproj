@@ -414,7 +414,6 @@
     <Content Include="Scripts\ripples.min.js" />
     <Content Include="Scripts\snackbar.js" />
     <Content Include="Scripts\snackbar.min.js" />
-    <Content Include="Scripts\temp.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

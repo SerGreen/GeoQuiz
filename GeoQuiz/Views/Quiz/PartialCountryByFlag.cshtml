@@ -43,7 +43,7 @@
                     @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
                     {
                         <div class="col-xs-@(12 / columns) answer-option-text-outer">
-                            <div class="col-sm-12 hover-highlight answer-option-text" onclick="submitAnswerAjax(@Model.Index, '@Model.Question.Choices[currentChoice]')">
+                            <div class="col-sm-12 hover-highlight answer-option-text" onclick='submitAnswerAjax(@Model.Index, "@Model.Question.Choices[currentChoice]")'>
                                 @(Model.Question.Choices[currentChoice])
                             </div>
                         </div>

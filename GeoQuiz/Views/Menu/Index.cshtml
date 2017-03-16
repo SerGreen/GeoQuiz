@@ -107,7 +107,7 @@
     <div class="well col-sm-offset-1 col-sm-3">
         <h4 class="text-muted text-center">Continents</h4>
         <hr />
-        <button id="select-all-btn" class="btn btn-primary btn-fab btn-fab-mini" type="button"><img src="~/img/deselect-all.svg"></button>
+        <button id="select-all-btn-continents" class="btn btn-primary btn-fab btn-fab-mini" type="button"><img src="~/img/deselect-all.svg"></button>
         <div id="continents">
             @for (int i = 0; i < allContinents.Length; i++)
             {
@@ -126,38 +126,11 @@
 </div>
 
 <!-- Modals -->
-
-<div id="start-game" class="modal fade" tabindex="-1" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title text-center">Game mode</h3>
-            </div>
-            <div class="modal-body">
-                <div class="center-div">
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.FlagByCountry }))
-                    {
-                        <button class="btn btn-raised btn-block btn-default btn-hover-highlight" type="submit" value="Begin flags">Begin flags</button>
-                    }
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.CountryByFlag }))
-                    {
-                        <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin countries">Begin countries</button>
-                    }
-                    @using (Html.BeginForm(nameof(MenuController.Index), MenuController.Nameof, new { gameMode = GameMode.CapitalByCountry }))
-                    {
-                        <button onclick="nope()" class="btn btn-raised btn-block btn-default btn-hover-highlight" type="button" value="Begin capitals">Begin capitals</button>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="allowed-countries" class="modal fade" tabindex="-1" style="display: none">
     @Html.Partial("PartialNonSovereignModal", Model.AllowedNonSovereignIds)
 </div>
 
+<!-- Scripts -->
 <script>
     // Workaround for Bootstrap's issue
     $('.btn-group .btn').click(function (event) {
@@ -165,7 +138,7 @@
             event.stopPropagation();
     });
 
-    // Visualisation of radio group switching
+    // Active button highlight for radio group
     function radioButtonHighlight(button) {
         if (button && !$(button).hasClass('disabled')) {
             $(button).siblings().removeClass('btn-primary');
@@ -227,55 +200,71 @@
     }
 </script>
 
-<!-- Continents checkboxes and button script -->
+<!-- Select/deselect all checkboxes button script -->
 <script>
-    var continentsCheckboxes;
-    var selectAllContinentsBtn = $('#select-all-btn');
+    // Attention drawer to continents checkboxes
     function noticeMeSenpai() {
+        continentsCheckboxes = $('#continents .checkbox label input');
         // I can't believe it, but this actually does not work with the for loop. Wow.
         var delay = 50;
         continentsCheckboxes[0].focus();
         setTimeout(function () { continentsCheckboxes[1].focus() }, delay);
-        setTimeout(function () { continentsCheckboxes[2].focus() }, delay*2);
-        setTimeout(function () { continentsCheckboxes[3].focus() }, delay*3);
-        setTimeout(function () { continentsCheckboxes[4].focus() }, delay*4);
-        setTimeout(function () { continentsCheckboxes[5].focus() }, delay*5);
+        setTimeout(function () { continentsCheckboxes[2].focus() }, delay * 2);
+        setTimeout(function () { continentsCheckboxes[3].focus() }, delay * 3);
+        setTimeout(function () { continentsCheckboxes[4].focus() }, delay * 4);
+        setTimeout(function () { continentsCheckboxes[5].focus() }, delay * 5);
     };
-    function checkAllContinentsOn() {
+
+    // Check if all checkboxes in a group are checked
+    function areAllCheckboxesOn(checkboxes) {
         var countChecked = 0;
-        continentsCheckboxes.each(function () {
+        checkboxes.each(function () {
             if ($(this).is(':checked'))
                 countChecked++;
         });
-
-        return countChecked == continentsCheckboxes.length;
+        return countChecked == checkboxes.length;
     }
-    function setIconAllContinentsBtn() {
-        if (checkAllContinentsOn())
-            selectAllContinentsBtn.find('img').attr('src', '/img/deselect-all.svg');
-        else
-            selectAllContinentsBtn.find('img').attr('src', '/img/select-all.svg');
+    // Set button text/icon depending on checkboxes state
+    function setSelectAllBtnText(button, checkboxes, buttonIcon = false) {
+        if (buttonIcon) {
+            if (areAllCheckboxesOn(checkboxes))
+                button.find('img').attr('src', '/img/deselect-all.svg');
+            else
+                button.find('img').attr('src', '/img/select-all.svg');
+        }
+        else {
+            if (areAllCheckboxesOn(checkboxes))
+                button.text('Deselect all');
+            else
+                button.text('Select all');
+        }
     }
-
-    $(document).ready(function () {
-        continentsCheckboxes = $('#continents .checkbox label input');
-        continentsCheckboxes.each(function () {
+    // Function to register all event handlers for select/deselect all checkboxes
+    function setupSelectAllCheckboxes(button, checkbxes, buttonIcon = false) {
+        checkbxes.each(function () {
             $(this).parent().click(function () {
-                setIconAllContinentsBtn();
+                setSelectAllBtnText(button, checkbxes, buttonIcon);
             });
         });
 
-        selectAllContinentsBtn.click(function () {
-            var allOn = checkAllContinentsOn();
-            continentsCheckboxes.each(function () {
+        button.click(function () {
+            var allOn = areAllCheckboxesOn(checkbxes);
+            checkbxes.each(function () {
                 if (allOn)
                     $(this).prop('checked', false);
                 else
                     $(this).prop('checked', true);
             });
-            setIconAllContinentsBtn();
+            setSelectAllBtnText(button, checkbxes, buttonIcon);
         });
 
-        setIconAllContinentsBtn();
+        setSelectAllBtnText(button, checkbxes, buttonIcon);
+    }
+
+    $(document).ready(function () {
+        setupSelectAllCheckboxes($('#select-all-btn-continents'), $('#continents .checkbox label input'), true);
+        setupSelectAllCheckboxes($('#select-all-btn-EU'), $('#non-sovereign-EU .checkbox label input'));
+        setupSelectAllCheckboxes($('#select-all-btn-AS'), $('#non-sovereign-AS .checkbox label input'));
+        setupSelectAllCheckboxes($('#select-all-btn-AF'), $('#non-sovereign-AF .checkbox label input'));
     });
 </script>

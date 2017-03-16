@@ -237,10 +237,8 @@ body .container-fluid .jumbotron-danger {
 .input-group-btn .btn:not(.btn-raised):not(.btn-link):focus {
   background-color: rgba(153, 153, 153, 0.2);
 }
-.btn:not(.btn-raised):not(.btn-link).btn-primary:hover,
-.input-group-btn .btn:not(.btn-raised):not(.btn-link).btn-primary:hover,
-.btn:not(.btn-raised):not(.btn-link).btn-primary:focus,
-.input-group-btn .btn:not(.btn-raised):not(.btn-link).btn-primary:focus {
+.btn.btn-fab.btn-primary:hover,
+.btn.btn-fab.btn-primary:focus {
   background-color: #00aa9a;
 }
 .theme-dark .btn:not(.btn-raised):not(.btn-link):hover,
