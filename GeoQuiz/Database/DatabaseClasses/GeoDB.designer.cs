@@ -568,6 +568,8 @@ namespace GeoQuiz.Database.DatabaseClasses
 		
 		private string _Capital;
 		
+		private string _AliasName;
+		
 		private EntityRef<Country> _Country;
 		
     #region Extensibility Method Definitions
@@ -582,6 +584,8 @@ namespace GeoQuiz.Database.DatabaseClasses
     partial void OnNameChanged();
     partial void OnCapitalChanging(string value);
     partial void OnCapitalChanged();
+    partial void OnAliasNameChanging(string value);
+    partial void OnAliasNameChanged();
     #endregion
 		
 		public Localization()
@@ -590,7 +594,7 @@ namespace GeoQuiz.Database.DatabaseClasses
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Language", DbType="Char(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Language", DbType="Char(2) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string Language
 		{
 			get
@@ -670,6 +674,26 @@ namespace GeoQuiz.Database.DatabaseClasses
 					this._Capital = value;
 					this.SendPropertyChanged("Capital");
 					this.OnCapitalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AliasName", DbType="NVarChar(50)")]
+		public string AliasName
+		{
+			get
+			{
+				return this._AliasName;
+			}
+			set
+			{
+				if ((this._AliasName != value))
+				{
+					this.OnAliasNameChanging(value);
+					this.SendPropertyChanging();
+					this._AliasName = value;
+					this.SendPropertyChanged("AliasName");
+					this.OnAliasNameChanged();
 				}
 			}
 		}

@@ -24,10 +24,11 @@
   </Table>
   <Table Name="dbo.Localization" Member="Localizations">
     <Type Name="Localization">
-      <Column Name="Language" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Language" Type="System.String" DbType="Char(2) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CountryId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Capital" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AliasName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="Country_Localization" Member="Country" ThisKey="CountryId" OtherKey="Id" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
