@@ -36,7 +36,7 @@
                 @for (int j = 0; j < columns && currentChoice < Model.Question.Choices.Length; j++, currentChoice++)
                 {
                     <div class="col-xs-@(12 / columns) hover-highlight answer-option">
-                        <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[currentChoice])" class="img-thumbnail" type="image" src="~/Content/Flags/@(Model.Question.Choices[currentChoice]).png" name="submit" />
+                        <input onclick="submitAnswerAjax(@Model.Index, @Model.Question.Choices[currentChoice])" class="img-thumbnail" type="image" src="~/img/Flags/@(Model.Question.Choices[currentChoice]).png" name="submit" />
                     </div>
                 }
             </div>

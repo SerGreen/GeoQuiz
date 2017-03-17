@@ -17,10 +17,21 @@ namespace GeoQuiz.Controllers
 
         // GET: Menu
         [HttpGet]
-        public ActionResult Index(GameSettings settings, string language = "EN")
+        public ActionResult Index(GameSettings settings, string lang = "EN")
         {
-            Session["Language"] = language;
+            SetCulture(lang);
             return View(settings);
+        }
+
+        private void SetCulture(string lang)
+        {
+            try
+            {
+                System.Threading.Thread.CurrentThread.CurrentCulture =
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+                Session["Language"] = lang;
+            }
+            catch (Exception) { throw new NotSupportedException($"ERROR: Invalid language code '{lang}'."); }
         }
 
         [HttpPost]

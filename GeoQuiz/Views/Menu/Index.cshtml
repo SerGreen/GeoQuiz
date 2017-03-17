@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "GeoQuiz";
     string[] allContinents = { "NA", "SA", "EU", "AS", "AF", "AU" };
-    string[] ContinentNames = { "North America", "South America", "Europe", "Asia", "Africa", "Australia and Oceania" };
+    string[] ContinentNames = { Localization.north_america, Localization.south_america, Localization.europe, Localization.asia, Localization.africa, Localization.australia };
     int[] timeLimits = { 5, 10, 20, 0 };
     int[] answerOptions = { 3, 5, 11, 0 };
     Difficulty[] difficulties = { Difficulty.Easy, Difficulty.Medium, Difficulty.Hard, Difficulty.VeryHard };
@@ -27,22 +27,22 @@
     <div class="col-sm-8">
         <!-- Left top well -->
         <div class="well col-sm-12 text-center">
-            <h2 class="text-muted text-uppercase">Start new game</h2>
+            <h2 class="text-muted text-uppercase">@Localization.start_new_game</h2>
             <hr />
 
             <div class="combined-button col-sm-offset-2 col-sm-8">
                 <button id="start-button" type="button" class="btn btn-lg btn-primary btn-raised" onclick="startNewGame()">
-                    <span>❬&nbsp;</span> Start! <span>&nbsp;❭</span>
+                    <span>❬&nbsp;</span> @Localization.start_btn <span>&nbsp;❭</span>
                 </button>
                 <div class="btn-group-justified btn-group" data-toggle="buttons" id="gameMode">
                     <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
-                        <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">Flags
+                        <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">@Localization.game_mode_btn_flags
                     </label>
                     <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
-                        <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">Countries
+                        <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">@Localization.game_mode_btn_countries
                     </label>
                     <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
-                        <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">Capitals
+                        <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">@Localization.game_mode_btn_capitals
                     </label>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <!-- Left bottom well -->
         <div class="well col-sm-12 text-center">
             <div class="col-sm-4">
-                <h4 class="text-muted">Time limit</h4>
+                <h4 class="text-muted">@Localization.time_limit</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
                     @for (int i = 0; i < timeLimits.Length; i++)
                     {
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <h4 class="text-muted">Answer options</h4>
+                <h4 class="text-muted">@Localization.answer_options</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
                     @for (int i = 0; i < answerOptions.Length; i++)
                     {
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <h4 class="text-muted">Difficulty</h4>
+                <h4 class="text-muted">@Localization.difficulty</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
                     @for (int i = 0; i < difficulties.Length; i++)
                     {
@@ -105,7 +105,7 @@
 
     <!-- Right well -->
     <div class="well col-sm-offset-1 col-sm-3">
-        <h4 class="text-muted text-center">Continents</h4>
+        <h4 class="text-muted text-center">@Localization.continents</h4>
         <hr />
         <button id="select-all-btn-continents" class="btn btn-primary btn-fab btn-fab-mini" type="button"><img src="~/img/deselect-all.svg"></button>
         <div id="continents">
@@ -121,7 +121,7 @@
         </div>
         <hr />
 
-        <div class="center-div"><button type="button" class="btn btn-sm btn-primary btn-raised btn-block" data-toggle="modal" data-target="#allowed-countries">Configure non-sovereign<br />countries</button></div>
+        <div class="center-div"><button type="button" class="btn btn-sm btn-primary btn-raised btn-block" data-toggle="modal" data-target="#allowed-countries" style="white-space:normal">@Localization.non_sovereign_btn</button></div>
     </div>
 </div>
 
@@ -234,9 +234,9 @@
         }
         else {
             if (areAllCheckboxesOn(checkboxes))
-                button.text('Deselect all');
+                button.text('@Localization.deselect_all_btn');
             else
-                button.text('Select all');
+                button.text('@Localization.select_all_btn');
         }
     }
     // Function to register all event handlers for select/deselect all checkboxes

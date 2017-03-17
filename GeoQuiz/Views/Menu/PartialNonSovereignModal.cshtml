@@ -1,17 +1,18 @@
 ﻿@model List<int>
 @using GeoQuiz.Database.DatabaseClasses
 
-@{
+@{  
     GeoDBDataContext db = new GeoDBDataContext();
+    string lang = Session["Language"] as string;
     string[] continents = { "EU", "AS", "AF" };     // There are no non-sovereign countries in Americas and Oceania
-    string[] continentNames = { "Europe", "Asia", "Africa" };
+    string[] continentNames = { Resources.Localization.europe, Resources.Localization.asia, Resources.Localization.africa };
 }
 
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="modal-title text-center">Included non-sovereign countries</h3>
+            <h3 class="modal-title text-center">@Resources.Localization.non_sovereign_modal_caption</h3>
         </div>
         <div class="modal-body">
             <div id="non-sovereign-list" class="row vdivide equal-height-children">
@@ -24,7 +25,7 @@
                             <div class="checkbox">
                                 <label>
                                     <input @(Model.Contains(c.Id) ? "checked" : null) type="checkbox" value="@c.Id">
-                                    @c.Name
+                                    @(c.Localizations.Where(x => x.Language == lang).Select(x => x.Name).FirstOrDefault() ?? c.Name)
                                 </label>
                             </div>
                         }

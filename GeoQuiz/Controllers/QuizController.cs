@@ -90,9 +90,9 @@ namespace GeoQuiz.Controllers
             foreach (Country c in countries)
             {
                 string question = c.Id.ToString();
-                var a = c.Localizations.Where(x => x.Language == language).Select(x => x.Name);
-                var b = a.FirstOrDefault();
-                string answer = c.Localizations.Where(x => x.Language == language).Select(x => x.Name).FirstOrDefault() ?? c.Name;
+                var country = c.Localizations.Where(x => x.Language == language).FirstOrDefault();
+                string answer = country?.Name ?? c.Name;
+                string alias = country?.AliasName;
                 // Everything as in flags mode, but now question is country ID (flag image selected by id) and answer and distractors are country names
                 string[] distractors = db.FlagNeighbours
                     .Where(fn => fn.CountryId1 == c.Id &&
@@ -105,7 +105,7 @@ namespace GeoQuiz.Controllers
                     .Select(x => x.Country1.Localizations.Where(z => z.Language == language).Select(z => z.Name).FirstOrDefault() ?? x.Country1.Name)
                     .ToArray();
 
-                questions.Add(new QuestionAnswerPair(question, answer, distractors));
+                questions.Add(new QuestionAnswerPair(question, answer, distractors, alias));
             }
 
             QuestionsList questionsList = new QuestionsList(questions);
@@ -124,8 +124,10 @@ namespace GeoQuiz.Controllers
             List<QuestionAnswerPair> questions = new List<QuestionAnswerPair>();
             foreach (Country c in countries)
             {
-                string question = c.Localizations.Where(x => x.Language == language).Select(x => x.Name).FirstOrDefault() ?? c.Name;
-                string answer = c.Localizations.Where(x=>x.Language == language).Select(x=>x.Capital).FirstOrDefault() ?? c.Capital;
+                var country = c.Localizations.Where(x => x.Language == language).FirstOrDefault();
+                string question = country?.Name ?? c.Name;
+                string answer = country?.Capital ?? c.Capital;
+                string alias = country?.AliasName;
                 // Everything as in flags mode, but now question is country ID (flag image selected by id) and answer and distractors are country names
                 string[] distractors = countries
                     .Where(x => x.Id != c.Id)
@@ -134,7 +136,7 @@ namespace GeoQuiz.Controllers
                     .Select(x => x.Localizations.Where(z => z.Language == language).Select(z => z.Capital).FirstOrDefault() ?? x.Capital)
                     .ToArray();
 
-                questions.Add(new QuestionAnswerPair(question, answer, distractors));
+                questions.Add(new QuestionAnswerPair(question, answer, distractors, alias));
             }
 
             QuestionsList questionsList = new QuestionsList(questions);
