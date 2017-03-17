@@ -3,7 +3,7 @@
 
 @{  
     GeoDBDataContext db = new GeoDBDataContext();
-    string lang = Session["Language"] as string;
+    string lang = (Session["Language"] as string)?.ToUpper();
     string[] continents = { "EU", "AS", "AF" };     // There are no non-sovereign countries in Americas and Oceania
     string[] continentNames = { Resources.Localization.europe, Resources.Localization.asia, Resources.Localization.africa };
 }

@@ -218,7 +218,7 @@
     <comment>QUIZ / ALL</comment>
   </data>
   <data name="mistake_wrong_capital" xml:space="preserve">
-    <value>Неправильно! Праильный ответ был:</value>
+    <value>Неправильно! Правильный ответ был:</value>
     <comment>QUIZ / CAPITALS</comment>
   </data>
   <data name="mistake_wrong_country" xml:space="preserve">

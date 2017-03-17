@@ -28,7 +28,13 @@
                 <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { lang = language })" class="navbar-brand" style="font-size:xx-large"><span class="glyphicon glyphicon-globe" id="geo-icon"></span> GeoQuiz</a>
             </div>
             <ul class="nav navbar-nav" style="float: right">
-                <li><a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { lang = language == "ru" ? "en" : "ru" })" class="navbar-link pull-right btn" style="margin:0">@language</a></li>
+                <li>
+                    <div id="language-button" class="navbar-link pull-right btn"><i class="material-icons">language</i></div>
+                    <div id="language-box" class="well well-sm language-box">
+                        <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { lang = "en" })"><img src="~/img/Flags/187.png" /></a>
+                        <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { lang = "ru" })"><img src="~/img/Flags/143.png" /></a>
+                    </div>
+                </li>
             </ul>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -45,5 +51,20 @@
     <footer class="text-center">
         <p>&copy; @DateTime.Now.Year - SerGreen</p>
     </footer>
+    <script>
+        var languageButtonOn = false;
+        var languageBox = $('#language-box');
+        $('#language-button').click(function () {
+            if (languageButtonOn) {
+                $(this).css('transform', '');
+                languageBox.css('transform', '');
+            }
+            else {
+                $(this).css('transform', 'rotateY(180deg)');
+                setTimeout(function () { languageBox.css('transform', 'translateX(-50%) rotateY(0deg)'); }, 130);
+            }
+            languageButtonOn = !languageButtonOn;
+        });
+    </script>
 </body>
 </html>

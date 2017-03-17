@@ -316,3 +316,34 @@ div.equal-height-children {
     width: 75%;
     margin-bottom: 7px;
 }
+
+/* Language selector */
+.language-box {
+    position: absolute;
+    display: inline-flex;
+    padding: 0 0px;
+    margin-left: 50%;
+    margin-top: 100%;
+    transform: translateX(-50%) rotateY(90deg);
+    z-index: 1;
+    transition: all 0.13s linear;
+}
+.language-box a img {
+    width: 32px;
+    margin: 0 4px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+.language-box a:first-child img {
+    margin-left: 0;
+}
+.language-box a:last-child img {
+    margin-right: 0;
+}
+#language-button {
+    margin: 10px 5px;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.26s linear;
+    transform: rotateY(0deg);
+}
