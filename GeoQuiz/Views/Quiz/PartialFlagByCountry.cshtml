@@ -6,8 +6,8 @@
     if (mistake != null)
     {
         mistakeText = mistake == "Timeout"
-            ? $"You ran out of time!"
-            : $"Wrong! It was flag of {mistake}";
+            ? Localization.mistake_timeout
+            : Localization.mistake_wrong_flag + $" {mistake}";
     }
 
     double columns = 0, rows = 0;
@@ -26,7 +26,7 @@
 
 @if (!gameOver)
 {
-    <h2 class="text-center">Select flag of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
+    <h2 class="text-center">@Localization.select_flag_of <span style="font-weight:bolder">@Model.Question.QuestionString</span></h2>
     <hr />
 
     <div>

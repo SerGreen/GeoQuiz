@@ -7,6 +7,7 @@ namespace GeoQuiz.Models
 {
     public class MenuIndexViewModel
     {
-
+        public GameSettings Settings { get; set; }
+        public MenuIndexModalViewModel ModalViewModel { get; set; }
     }
 }

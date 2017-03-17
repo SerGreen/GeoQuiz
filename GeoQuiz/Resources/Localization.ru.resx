@@ -137,6 +137,14 @@
     <value>Континенты</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="correct" xml:space="preserve">
+    <value>Правильно</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="correct_answers" xml:space="preserve">
+    <value>Правильные ответы</value>
+    <comment>QUIZ + RESULTS</comment>
+  </data>
   <data name="deselect_all_btn" xml:space="preserve">
     <value>Убрать все</value>
     <comment>MENU / INDEX / MODAL</comment>
@@ -144,6 +152,30 @@
   <data name="difficulty" xml:space="preserve">
     <value>Сложность</value>
     <comment>MENU / INDEX</comment>
+  </data>
+  <data name="difficulty_easy" xml:space="preserve">
+    <value>легко</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_hard" xml:space="preserve">
+    <value>сложно</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_medium" xml:space="preserve">
+    <value>средне</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_very_hard" xml:space="preserve">
+    <value>очень сложно</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="distractors_none" xml:space="preserve">
+    <value>нет</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="enter_capital_of" xml:space="preserve">
+    <value>Введите столицу страны:</value>
+    <comment>QUIZ / CAPITALS</comment>
   </data>
   <data name="europe" xml:space="preserve">
     <value>Европа</value>
@@ -161,6 +193,42 @@
     <value>Флаги</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="game_mode_capitals" xml:space="preserve">
+    <value>Игровой режим: Столицы</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="game_mode_countries" xml:space="preserve">
+    <value>Игровой режим: Страны</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="game_mode_flags" xml:space="preserve">
+    <value>Игровой режим: Флаги</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>Загрузка...</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="longest_streak" xml:space="preserve">
+    <value>Максимум подряд</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="mistake_timeout" xml:space="preserve">
+    <value>Время вышло!</value>
+    <comment>QUIZ / ALL</comment>
+  </data>
+  <data name="mistake_wrong_capital" xml:space="preserve">
+    <value>Неправильно! Праильный ответ был:</value>
+    <comment>QUIZ / CAPITALS</comment>
+  </data>
+  <data name="mistake_wrong_country" xml:space="preserve">
+    <value>Неправильно! Это был флаг:</value>
+    <comment>QUIZ / COUNTRIES</comment>
+  </data>
+  <data name="mistake_wrong_flag" xml:space="preserve">
+    <value>Неправильно! Это был флаг:</value>
+    <comment>QUIZ / FLAGS</comment>
+  </data>
   <data name="non_sovereign_btn" xml:space="preserve">
     <value>Настроить непризнанные государства</value>
     <comment>MENU / INDEX</comment>
@@ -173,9 +241,45 @@
     <value>Северная Америка</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="north_and_south_americas" xml:space="preserve">
+    <value>Северная и Южная Америка</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="questions_total" xml:space="preserve">
+    <value>Всего вопросов</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="question_num" xml:space="preserve">
+    <value>Вопрос</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="results_title" xml:space="preserve">
+    <value>Результаты</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="score" xml:space="preserve">
+    <value>Счёт</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="seconds" xml:space="preserve">
+    <value>сек</value>
+    <comment>RESULTS</comment>
+  </data>
   <data name="select_all_btn" xml:space="preserve">
     <value>Выбрать все</value>
     <comment>MENU / INDEX / MODAL</comment>
+  </data>
+  <data name="select_capital_of" xml:space="preserve">
+    <value>Выберите столицу страны:</value>
+    <comment>QUIZ / CAPITALS</comment>
+  </data>
+  <data name="select_country_of" xml:space="preserve">
+    <value>Какой стране принадлежит этот флаг?</value>
+    <comment>QUIZ / COUNTRIES</comment>
+  </data>
+  <data name="select_flag_of" xml:space="preserve">
+    <value>Выберите флаг страны:</value>
+    <comment>QUIZ / FLAGS</comment>
   </data>
   <data name="south_america" xml:space="preserve">
     <value>Южная Америка</value>
@@ -189,8 +293,40 @@
     <value>Начать новую игру</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="streak" xml:space="preserve">
+    <value>Подряд правильных</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="time_left" xml:space="preserve">
+    <value>Осталось времени</value>
+    <comment>QUIZ</comment>
+  </data>
   <data name="time_limit" xml:space="preserve">
     <value>Лимит времени</value>
     <comment>MENU / INDEX</comment>
+  </data>
+  <data name="type_here_hint" xml:space="preserve">
+    <value>Введите свой ответ</value>
+    <comment>QUIZ / COUN. + CAPIT.</comment>
+  </data>
+  <data name="unlimited_time" xml:space="preserve">
+    <value>Неограниченное время</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="well_done" xml:space="preserve">
+    <value>Отлично!</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="whole_world" xml:space="preserve">
+    <value>🌍 Весь мир</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="wrong" xml:space="preserve">
+    <value>Неправильно</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="wrong_answers" xml:space="preserve">
+    <value>Неправильные ответы</value>
+    <comment>QUIZ + RESULTS</comment>
   </data>
 </root>

@@ -431,12 +431,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CultureAwareControllerActivator.cs" />
     <Compile Include="Infrastructure\GameSettingsModelBinder.cs" />
     <Compile Include="Infrastructure\GameSettingsSave.cs" />
     <Compile Include="Infrastructure\Helpers.cs" />
     <Compile Include="Infrastructure\QuestionsModelBinder.cs" />
-    <Compile Include="Resources\Localization.ru-RU.Designer.cs">
-      <DependentUpon>Localization.ru-RU.resx</DependentUpon>
+    <Compile Include="Models\ViewModels\MenuIndexModalViewModel.cs" />
+    <Compile Include="Resources\Localization.ru.Designer.cs">
+      <DependentUpon>Localization.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -480,9 +482,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Localization.ru-RU.resx">
+    <EmbeddedResource Include="Resources\Localization.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localization.ru-RU.Designer.cs</LastGenOutput>
+      <LastGenOutput>Localization.ru.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization.resx">

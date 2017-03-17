@@ -123,7 +123,7 @@
   </data>
   <data name="answer_options" xml:space="preserve">
     <value>Answer options</value>
-    <comment>MENU / INDEX</comment>
+    <comment>MENU / INDEX + RESULTS</comment>
   </data>
   <data name="asia" xml:space="preserve">
     <value>Asia</value>
@@ -137,13 +137,45 @@
     <value>Continents</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="correct" xml:space="preserve">
+    <value>Correct answers</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="correct_answers" xml:space="preserve">
+    <value>Correct answers</value>
+    <comment>QUIZ + RESULTS</comment>
+  </data>
   <data name="deselect_all_btn" xml:space="preserve">
     <value>Deselect all</value>
     <comment>MENU / INDEX / MODAL</comment>
   </data>
   <data name="difficulty" xml:space="preserve">
     <value>Difficulty</value>
-    <comment>MENU / INDEX</comment>
+    <comment>MENU / INDEX + RESULTS</comment>
+  </data>
+  <data name="difficulty_easy" xml:space="preserve">
+    <value>easy</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_hard" xml:space="preserve">
+    <value>hard</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_medium" xml:space="preserve">
+    <value>medium</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="difficulty_very_hard" xml:space="preserve">
+    <value>very hard</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="distractors_none" xml:space="preserve">
+    <value>none</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="enter_capital_of" xml:space="preserve">
+    <value>Enter the capital of</value>
+    <comment>QUIZ / CAPITALS</comment>
   </data>
   <data name="europe" xml:space="preserve">
     <value>Europe</value>
@@ -161,6 +193,42 @@
     <value>Flags</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="game_mode_capitals" xml:space="preserve">
+    <value>Capitals game mode</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="game_mode_countries" xml:space="preserve">
+    <value>Countries game mode</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="game_mode_flags" xml:space="preserve">
+    <value>Flags game mode</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="loading" xml:space="preserve">
+    <value>Loading...</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="longest_streak" xml:space="preserve">
+    <value>Longest streak</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="mistake_timeout" xml:space="preserve">
+    <value>You ran out of time!</value>
+    <comment>QUIZ / ALL</comment>
+  </data>
+  <data name="mistake_wrong_capital" xml:space="preserve">
+    <value>Wrong! Correct answer was</value>
+    <comment>QUIZ / CAPITALS</comment>
+  </data>
+  <data name="mistake_wrong_country" xml:space="preserve">
+    <value>Wrong! That was flag of</value>
+    <comment>QUIZ / COUNTRIES</comment>
+  </data>
+  <data name="mistake_wrong_flag" xml:space="preserve">
+    <value>Wrong! It was flag of</value>
+    <comment>QUIZ / FLAGS</comment>
+  </data>
   <data name="non_sovereign_btn" xml:space="preserve">
     <value>Configure non-sovereign countries</value>
     <comment>MENU / INDEX</comment>
@@ -173,9 +241,45 @@
     <value>North America</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="north_and_south_americas" xml:space="preserve">
+    <value>North and South America</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="questions_total" xml:space="preserve">
+    <value>Questions total</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="question_num" xml:space="preserve">
+    <value>Question</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="results_title" xml:space="preserve">
+    <value>Results</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="score" xml:space="preserve">
+    <value>Score</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="seconds" xml:space="preserve">
+    <value>sec</value>
+    <comment>RESULTS</comment>
+  </data>
   <data name="select_all_btn" xml:space="preserve">
     <value>Select all</value>
     <comment>MENU / INDEX / MODAL</comment>
+  </data>
+  <data name="select_capital_of" xml:space="preserve">
+    <value>Select the capital of</value>
+    <comment>QUIZ / CAPITALS</comment>
+  </data>
+  <data name="select_country_of" xml:space="preserve">
+    <value>What country does this flag belong to?</value>
+    <comment>QUIZ / COUNTRIES</comment>
+  </data>
+  <data name="select_flag_of" xml:space="preserve">
+    <value>Select flag of</value>
+    <comment>QUIZ / FLAGS</comment>
   </data>
   <data name="south_america" xml:space="preserve">
     <value>South America</value>
@@ -189,8 +293,40 @@
     <value>Start new game</value>
     <comment>MENU / INDEX</comment>
   </data>
+  <data name="streak" xml:space="preserve">
+    <value>Streak</value>
+    <comment>QUIZ</comment>
+  </data>
+  <data name="time_left" xml:space="preserve">
+    <value>Time left</value>
+    <comment>QUIZ</comment>
+  </data>
   <data name="time_limit" xml:space="preserve">
     <value>Time limit</value>
-    <comment>MENU / INDEX</comment>
+    <comment>MENU / INDEX + RESULTS</comment>
+  </data>
+  <data name="type_here_hint" xml:space="preserve">
+    <value>Type your answer</value>
+    <comment>QUIZ / COUN. + CAPIT.</comment>
+  </data>
+  <data name="unlimited_time" xml:space="preserve">
+    <value>Unlimited time</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="well_done" xml:space="preserve">
+    <value>Well done!</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="whole_world" xml:space="preserve">
+    <value>🌍 Whole world</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="wrong" xml:space="preserve">
+    <value>Wrong answers</value>
+    <comment>RESULTS</comment>
+  </data>
+  <data name="wrong_answers" xml:space="preserve">
+    <value>Wrong answers</value>
+    <comment>QUIZ + RESULTS</comment>
   </data>
 </root>

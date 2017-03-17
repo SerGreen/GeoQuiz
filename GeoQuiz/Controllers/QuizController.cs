@@ -3,7 +3,9 @@ using GeoQuiz.Models;
 using GeoQuiz.Models.Shared;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -44,7 +46,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartFlagByCountryGame(GameSettings settings)
         {
-            string language = Session["Language"] as string;
+            string language = (Session["Language"] as string)?.ToUpper();
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -81,7 +83,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartCountryByFlagGame(GameSettings settings)
         {
-            string language = Session["Language"] as string;
+            string language = (Session["Language"] as string)?.ToUpper();
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -116,7 +118,7 @@ namespace GeoQuiz.Controllers
         [NonAction]
         private ActionResult StartCapitalByCountryGame(GameSettings settings)
         {
-            string language = Session["Language"] as string;
+            string language = (Session["Language"] as string)?.ToUpper();
             List<Country> countries = GetSelectedCountries(settings);
 
             // Assemble questions for each country
@@ -163,7 +165,7 @@ namespace GeoQuiz.Controllers
         }
 
         [HttpPost]
-        public ActionResult Quiz(QuestionsList questions, GameSettings settings, string answer, int questionIndex)
+        public ActionResult Quiz(QuestionsList questions, GameSettings settings, string answer, int questionIndex, string lang)
         {
             // Store correct answer
             string correctAnswer = questions.CorrectAnswer;
@@ -183,7 +185,8 @@ namespace GeoQuiz.Controllers
                     switch (settings.GameMode)
                     {
                         case GameMode.FlagByCountry:
-                            mistakeMessage = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer)).Name; break;
+                            var c = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer));
+                            mistakeMessage = c.Localizations.Where(x=>x.Language == lang).FirstOrDefault()?.Name ?? c.Name; break;
                         case GameMode.CountryByFlag:
                         case GameMode.CapitalByCountry:
                             mistakeMessage = correctAnswer; break;

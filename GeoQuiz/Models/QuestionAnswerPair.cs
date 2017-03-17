@@ -28,7 +28,7 @@ namespace GeoQuiz.Models
         public bool TestAnswer(string answer)
         {
             string playerAnswer = Regex.Replace(answer, @"[\[|\]|'|’]", " ");
-            string correctAnswer = Regex.Replace(answer, @"[\[|\]|'|’]", " ");
+            string correctAnswer = Regex.Replace(Answer, @"[\[|\]|'|’]", " ");
             return playerAnswer.Equals(correctAnswer, StringComparison.InvariantCultureIgnoreCase) 
                 || (AnswerAlias != null && playerAnswer.Equals(AnswerAlias, StringComparison.InvariantCultureIgnoreCase));
         }

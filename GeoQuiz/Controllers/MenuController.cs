@@ -17,21 +17,21 @@ namespace GeoQuiz.Controllers
 
         // GET: Menu
         [HttpGet]
-        public ActionResult Index(GameSettings settings, string lang = "EN")
+        public ActionResult Index(GameSettings settings, string lang)
         {
-            SetCulture(lang);
-            return View(settings);
-        }
+            Session["Language"] = lang;
 
-        private void SetCulture(string lang)
-        {
-            try
+            var viewModel = new MenuIndexViewModel()
             {
-                System.Threading.Thread.CurrentThread.CurrentCulture =
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
-                Session["Language"] = lang;
-            }
-            catch (Exception) { throw new NotSupportedException($"ERROR: Invalid language code '{lang}'."); }
+                Settings = settings,
+                ModalViewModel = new MenuIndexModalViewModel()
+                {
+                    AllowedNonSovereignIds = settings.AllowedNonSovereignIds,
+                    AllCountries = db.Countries.Where(x => !x.IsSovereign)
+                }
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]

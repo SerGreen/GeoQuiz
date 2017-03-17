@@ -37,7 +37,7 @@ namespace GeoQuiz.Models
 
         public Question CurrentQuestion => EndReached ? null : this[CurrentQuestionIndex].Question;
 
-        public string CorrectAnswer => this[CurrentQuestionIndex].Answer;
+        public string CorrectAnswer => this[CurrentQuestionIndex]?.Answer;
 
         public bool EndReached { get { return CurrentQuestionIndex >= Count; } }
 

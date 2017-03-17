@@ -1,4 +1,4 @@
-﻿@model List<int>
+﻿@model GeoQuiz.Models.MenuIndexModalViewModel
 @using GeoQuiz.Database.DatabaseClasses
 
 @{  
@@ -20,11 +20,11 @@
                 {
                     <div id="non-sovereign-@continents[i]" class="col-sm-4 non-sovereign-col">
                         <h4 class="text-center">@continentNames[i]</h4>
-                        @foreach (Country c in db.Countries.Where(x => !x.IsSovereign && x.Continent == continents[i]))
+                        @foreach (Country c in Model.AllCountries.Where(x => x.Continent == continents[i]))
                         {
                             <div class="checkbox">
                                 <label>
-                                    <input @(Model.Contains(c.Id) ? "checked" : null) type="checkbox" value="@c.Id">
+                                    <input @(Model.AllowedNonSovereignIds.Contains(c.Id) ? "checked" : null) type="checkbox" value="@c.Id">
                                     @(c.Localizations.Where(x => x.Language == lang).Select(x => x.Name).FirstOrDefault() ?? c.Name)
                                 </label>
                             </div>

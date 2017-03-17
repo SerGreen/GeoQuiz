@@ -1,8 +1,9 @@
-﻿@model GeoQuiz.Models.GameSettings
+﻿@model GeoQuiz.Models.MenuIndexViewModel
 @using GeoQuiz.Models.Shared
 
 @{
     ViewBag.Title = "GeoQuiz";
+    GeoQuiz.Models.GameSettings settings = Model.Settings;
     string[] allContinents = { "NA", "SA", "EU", "AS", "AF", "AU" };
     string[] ContinentNames = { Localization.north_america, Localization.south_america, Localization.europe, Localization.asia, Localization.africa, Localization.australia };
     int[] timeLimits = { 5, 10, 20, 0 };
@@ -35,13 +36,13 @@
                     <span>❬&nbsp;</span> @Localization.start_btn <span>&nbsp;❭</span>
                 </button>
                 <div class="btn-group-justified btn-group" data-toggle="buttons" id="gameMode">
-                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(settings.GameMode == GameMode.FlagByCountry ? "active btn-primary" : "")">
                         <input name="gameMode" value="@GameMode.FlagByCountry" type="radio">@Localization.game_mode_btn_flags
                     </label>
-                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(settings.GameMode == GameMode.CountryByFlag? "active btn-primary" : "")">
                         <input name="gameMode" value="@GameMode.CountryByFlag" type="radio">@Localization.game_mode_btn_countries
                     </label>
-                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(Model.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
+                    <label onchange="switchGameMode()" onclick="radioButtonHighlight(this)" class="btn btn-lg btn-default btn-raised @(settings.GameMode == GameMode.CapitalByCountry ? "active btn-primary" : "")">
                         <input name="gameMode" value="@GameMode.CapitalByCountry" type="radio">@Localization.game_mode_btn_capitals
                     </label>
                 </div>
@@ -55,7 +56,7 @@
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
                     @for (int i = 0; i < timeLimits.Length; i++)
                     {
-                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == Model.TimeLimit ? "active btn-primary" : "")">
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == settings.TimeLimit ? "active btn-primary" : "")">
                             <input name="timeLimit" value="@timeLimits[i]" type="radio">
                             @if (timeLimits[i] == 0)
                             {
@@ -74,7 +75,7 @@
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
                     @for (int i = 0; i < answerOptions.Length; i++)
                     {
-                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == Model.DistractorsAmount ? "active btn-primary" : null) @(answerOptions[i] == 0 && Model.GameMode == GameMode.FlagByCountry ? "disabled" : null)" @(answerOptions[i] == 0 ? "id=pencil" : null)>
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(answerOptions[i] == settings.DistractorsAmount ? "active btn-primary" : null) @(answerOptions[i] == 0 && settings.GameMode == GameMode.FlagByCountry ? "disabled" : null)" @(answerOptions[i] == 0 ? "id=pencil" : null)>
                             <input name="answerOptions" value="@answerOptions[i]" type="radio">
                             @if (answerOptions[i] == 0)
                             {
@@ -93,7 +94,7 @@
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
                     @for (int i = 0; i < difficulties.Length; i++)
                     {
-                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(difficulties[i] == Model.Difficulty ? "active btn-primary" : "")">
+                        <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(difficulties[i] == settings.Difficulty ? "active btn-primary" : "")">
                             <input name="difficulty" value="@difficulties[i]" type="radio">
                             <div class="bigger-symbol">@difficultySymbols[i]</div>
                         </label>
@@ -113,7 +114,7 @@
             {
                 <div class="checkbox">
                     <label>
-                        <input @(Model.Continents.Contains(allContinents[i]) ? "checked" : null) type="checkbox" value="@allContinents[i]">
+                        <input @(settings.Continents.Contains(allContinents[i]) ? "checked" : null) type="checkbox" value="@allContinents[i]">
                         @ContinentNames[i]
                     </label>
                 </div>
@@ -127,7 +128,7 @@
 
 <!-- Modals -->
 <div id="allowed-countries" class="modal fade" tabindex="-1" style="display: none">
-    @Html.Partial("PartialNonSovereignModal", Model.AllowedNonSovereignIds)
+    @Html.Partial("PartialNonSovereignModal", Model.ModalViewModel)
 </div>
 
 <!-- Scripts -->
@@ -193,7 +194,7 @@
                 data: settings,
                 url: '@Url.Action(nameof(MenuController.SaveGameSettings), MenuController.Nameof)',
                 success: function () {
-                    window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof)';
+                    window.location.href = '@Url.Action(nameof(QuizController.Index), QuizController.Nameof, new { lang = Session["Language"] })';
                 }
             });
         }

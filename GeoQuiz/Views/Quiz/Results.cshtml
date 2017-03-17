@@ -2,20 +2,20 @@
 @model GeoQuiz.Models.ResultsViewModel
 
 @{
-    ViewBag.Title = "GeoQuiz : Results";
+    ViewBag.Title = $"GeoQuiz : {Localization.results_title}";
 }
 
 <div class="col-sm-12 well">
-    <h1 class="text-center">Well done!</h1>
+    <h1 class="text-center">@Localization.well_done</h1>
     <hr />
     <div class="row text-center">
         <div class="col-sm-offset-3 col-sm-3">
             <div id="percent-score" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            <div class="result-text-big">Correct answers</div>
+            <div class="result-text-big">@Localization.correct_answers</div>
         </div>
         <div class="col-sm-3">
             <div id="points-score" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            <div class="result-text-big">Score</div>
+            <div class="result-text-big">@Localization.score</div>
         </div>
     </div>
     <div class="row" style="margin-top:40px">
@@ -27,33 +27,33 @@
     <div class="row text-center result-small-text">
         <div class="col-sm-offset-2 col-sm-2">
             <div id="wrong-streak" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            Longest streak
+            @Localization.longest_streak
         </div>
         <div class="col-sm-2">
             <div id="wrong-result" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            Wrong answers
+            @Localization.wrong
         </div>
         <div class="col-sm-2">
             <div id="correct-result" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            Correct answers
+            @Localization.correct
         </div>
         <div class="col-sm-2">
             <div id="correct-streak" style="width:auto; height:auto; position:relative; margin:auto"></div>
-            Longest streak
+            @Localization.longest_streak
         </div>
     </div>
     <hr />
-    <h3 class="text-center text-muted">@(Model.GameSettings.GameMode == GameMode.FlagByCountry ? "Flags" : Model.GameSettings.GameMode == GameMode.CountryByFlag ? "Countries" : "Capitals") game mode</h3>
+    <h3 class="text-center text-muted">@(Model.GameSettings.GameMode == GameMode.FlagByCountry ? Localization.game_mode_flags : Model.GameSettings.GameMode == GameMode.CountryByFlag ? Localization.game_mode_countries : Localization.game_mode_capitals)</h3>
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6 result-small-text center-ul">
             <ul class="text-muted">
                 <li>@GeoQuiz.Infrastructure.Helpers.GetContinentsList(Model.GameSettings.Continents)</li>
             </ul>
             <ul style="columns:2" class="text-muted">
-                <li>@(Model.GameSettings.TimeLimit == 0 ? "Unlimited time" : $"Time limit: {Model.GameSettings.TimeLimit} sec")</li>
-                <li>Difficulty: @Model.GameSettings.Difficulty.ToString().ToSentence().ToLower()</li>
-                <li>Answer options: @(Model.GameSettings.DistractorsAmount > 0 ? (Model.GameSettings.DistractorsAmount + 1).ToString() : "none")</li>
-                <li>Questions total: @Model.Questions.Count</li>
+                <li>@(Model.GameSettings.TimeLimit == 0 ? Localization.unlimited_time : $"{Localization.time_limit}: {Model.GameSettings.TimeLimit} {Localization.seconds}")</li>
+                <li>@Localization.difficulty: @GeoQuiz.Infrastructure.Helpers.GetDificultyString(Model.GameSettings.Difficulty)</li>
+                <li>@Localization.answer_options: @(Model.GameSettings.DistractorsAmount > 0 ? (Model.GameSettings.DistractorsAmount + 1).ToString() : Localization.distractors_none)</li>
+                <li>@Localization.questions_total: @Model.Questions.Count</li>
             </ul>
         </div>
     </div>

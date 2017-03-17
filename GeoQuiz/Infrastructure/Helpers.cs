@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GeoQuiz.Models.Shared;
+using Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,28 +20,45 @@ namespace GeoQuiz.Infrastructure
                     isPresent[i] = true;
 
             if (isPresent.All(x => x == true))
-                return "🌍 Whole world";
+                return Localization.whole_world;
 
             if (isPresent[0] && isPresent[1])
-                list.Add("North and South America");
+                list.Add(Localization.north_and_south_americas);
             else
             {
                 if(isPresent[0])
-                    list.Add("North America");
+                    list.Add(Localization.north_america);
                 if (isPresent[1])
-                    list.Add("South America");
+                    list.Add(Localization.south_america);
             }
 
             if (isPresent[2])
-                list.Add("Europe");
+                list.Add(Localization.europe);
             if (isPresent[3])
-                list.Add("Asia");
+                list.Add(Localization.asia);
             if (isPresent[4])
-                list.Add("Africa");
+                list.Add(Localization.africa);
             if (isPresent[5])
-                list.Add("Australia and Oceania");
+                list.Add(Localization.australia);
 
             return string.Join(" | ", list);
+        }
+
+        public static string GetDificultyString(Difficulty difficulty)
+        {
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    return Localization.difficulty_easy;
+                case Difficulty.Medium:
+                    return Localization.difficulty_medium;
+                case Difficulty.Hard:
+                    return Localization.difficulty_hard;
+                case Difficulty.VeryHard:
+                    return Localization.difficulty_very_hard;
+                default:
+                    return "OVER 9000";
+            }
         }
     }
 }

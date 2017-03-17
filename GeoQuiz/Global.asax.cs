@@ -20,6 +20,8 @@ namespace GeoQuiz
 
             ModelBinders.Binders.Add(typeof(QuestionsList), new QuestionsModelBinder());
             ModelBinders.Binders.Add(typeof(GameSettings), new GameSettingsModelBinder());
+
+            ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory(new CultureAwareControllerActivator()));
         }
     }
 }
