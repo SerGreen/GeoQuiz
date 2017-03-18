@@ -10,7 +10,7 @@
     <title>@ViewBag.Title</title>
     <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    @Styles.Render("~/Content/css/bootstrap", "~/Content/css")
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/javascript")
     @Scripts.RenderFormat(@"<script async src=""{0}""></script>", "~/bundles/bootstrap")
@@ -22,7 +22,7 @@
             <div class="navbar-header">
                 <a href="@Url.Action(nameof(MenuController.Index), MenuController.Nameof, new { lang = language })" class="navbar-brand" style="font-size:xx-large"><span class="glyphicon glyphicon-globe" id="geo-icon"></span> GeoQuiz</a>
             </div>
-            <ul class="nav navbar-nav" style="float: right">
+            <ul id="language-button-container" class="nav navbar-nav">
                 <li>
                     <button id="language-button" class="navbar-link pull-right btn" type="button"><i class="material-icons">language</i></button>
                     <div id="language-box" class="well well-sm language-box">

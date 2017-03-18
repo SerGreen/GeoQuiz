@@ -186,7 +186,7 @@ namespace GeoQuiz.Controllers
                     {
                         case GameMode.FlagByCountry:
                             var c = db.Countries.FirstOrDefault(x => x.Id == int.Parse(answer));
-                            mistakeMessage = c.Localizations.Where(x=>x.Language == lang).FirstOrDefault()?.Name ?? c.Name; break;
+                            mistakeMessage = c.Localizations.Where(x=>x.Language == lang.ToUpper()).FirstOrDefault()?.Name ?? c.Name; break;
                         case GameMode.CountryByFlag:
                         case GameMode.CapitalByCountry:
                             mistakeMessage = correctAnswer; break;

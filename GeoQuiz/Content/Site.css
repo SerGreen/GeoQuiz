@@ -321,6 +321,10 @@ div.equal-height-children {
 }
 
 /* Language selector */
+#language-button-container {
+    float: right;
+    margin-right: 19px;
+}
 .language-box {
     position: absolute;
     display: inline-flex;

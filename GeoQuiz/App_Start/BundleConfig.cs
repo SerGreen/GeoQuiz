@@ -14,6 +14,7 @@ namespace GeoQuiz
             bundles.Add(new ScriptBundle("~/bundles/jquery", jqueryCDN).Include(
                       "~/Scripts/jquery-{version}.js"));
 
+            // Not used, because i use now customized bootstrap
             string bootstrapCDN = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
             bundles.Add(new StyleBundle("~/Content/css/bootstrap", bootstrapCDN).Include(
                       "~/Content/bootstrap.css"));
@@ -33,6 +34,7 @@ namespace GeoQuiz
                       "~/Scripts/rating.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
                       "~/Content/bootstrap-material-design.css",
                       "~/Content/ripples.css",
                       "~/Content/snackbar.css",
