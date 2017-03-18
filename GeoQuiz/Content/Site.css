@@ -242,6 +242,9 @@ div.equal-height-children {
 .radio-button-group .btn:last-child {
     border-radius: 0px 2px 2px 0px;
 }
+.radio-button-group .btn span {
+    display: inline-flex;
+}
 
 /* Start and Game mode buttons */
 .combined-button button:first-child {

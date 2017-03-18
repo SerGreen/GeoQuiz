@@ -18,7 +18,7 @@
             <div id="non-sovereign-list" class="row vdivide equal-height-children">
                 @for (int i = 0; i < continents.Length; i++)
                 {
-                    <div id="non-sovereign-@continents[i]" class="col-sm-4 non-sovereign-col">
+                    <div id="non-sovereign-@continents[i]" class="col-xs-4 non-sovereign-col">
                         <h4 class="text-center">@continentNames[i]</h4>
                         @foreach (Country c in Model.AllCountries.Where(x => x.Continent == continents[i]))
                         {

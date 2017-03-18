@@ -329,4 +329,13 @@
     <value>Wrong answers</value>
     <comment>QUIZ + RESULTS</comment>
   </data>
+  <data name="answer_options_br" xml:space="preserve">
+    <value>Answer {0}options</value>
+  </data>
+  <data name="difficulty_br" xml:space="preserve">
+    <value>Difficulty{0}&amp;nbsp;</value>
+  </data>
+  <data name="time_limit_br" xml:space="preserve">
+    <value>Time {0}limit</value>
+  </data>
 </root>

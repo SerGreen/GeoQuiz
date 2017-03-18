@@ -329,4 +329,13 @@
     <value>Неправильные ответы</value>
     <comment>QUIZ + RESULTS</comment>
   </data>
+  <data name="answer_options_br" xml:space="preserve">
+    <value>Вариантов {0}ответов</value>
+  </data>
+  <data name="difficulty_br" xml:space="preserve">
+    <value>Сложность{0}&amp;nbsp;</value>
+  </data>
+  <data name="time_limit_br" xml:space="preserve">
+    <value>Лимит {0}времени</value>
+  </data>
 </root>

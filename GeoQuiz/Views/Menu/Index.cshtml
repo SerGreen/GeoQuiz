@@ -25,13 +25,13 @@
 </script>
 
 <div class="equal-height-children">
-    <div class="col-sm-8">
+    <div class="col-xs-9 col-md-8">
         <!-- Left top well -->
-        <div class="well col-sm-12 text-center">
+        <div class="well col-xs-12 text-center">
             <h2 class="text-muted text-uppercase">@Localization.start_new_game</h2>
             <hr />
 
-            <div class="combined-button col-sm-offset-2 col-sm-8">
+            <div class="combined-button col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
                 <button id="start-button" type="button" class="btn btn-lg btn-primary btn-raised" onclick="startNewGame()">
                     <span>❬&nbsp;</span> @Localization.start_btn <span>&nbsp;❭</span>
                 </button>
@@ -50,28 +50,28 @@
         </div>
 
         <!-- Left bottom well -->
-        <div class="well col-sm-12 text-center">
-            <div class="col-sm-4">
-                <h4 class="text-muted">@Localization.time_limit</h4>
+        <div class="well col-xs-12 text-center">
+            <div class="col-xs-4">
+                <h4 class="text-muted">@(Html.Raw(string.Format(Localization.time_limit_br, "<br class='visible-xs'/>")))</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="timeLimit">
                     @for (int i = 0; i < timeLimits.Length; i++)
                     {
                         <label onclick="radioButtonHighlight(this)" class="btn btn-default btn-raised @(timeLimits[i] == settings.TimeLimit ? "active btn-primary" : "")">
-                            <input name="timeLimit" value="@timeLimits[i]" type="radio">
+                            <input name="timeLimit" value="@timeLimits[i]" type="radio" />
                             @if (timeLimits[i] == 0)
                             {
                                 <div class="bigger-symbol">∞</div>
                             }
                             else
                             {
-                                @($"{timeLimits[i]}s")
+                                <span>@timeLimits[i]<span class="visible-md">s</span></span>
                             }
                         </label>
                     }
                 </div>
             </div>
-            <div class="col-sm-4">
-                <h4 class="text-muted">@Localization.answer_options</h4>
+            <div class="col-xs-4">
+                <h4 class="text-muted">@(Html.Raw(string.Format(Localization.answer_options_br, "<br class='visible-xs'/>")))</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="answerOptions">
                     @for (int i = 0; i < answerOptions.Length; i++)
                     {
@@ -89,8 +89,8 @@
                     }
                 </div>
             </div>
-            <div class="col-sm-4">
-                <h4 class="text-muted">@Localization.difficulty</h4>
+            <div class="col-xs-4">
+                <h4 class="text-muted">@(Html.Raw(string.Format(Localization.difficulty_br, "<br class='visible-xs'/>")))</h4>
                 <div class="radio-button-group btn-group btn-group-justified" data-toggle="buttons" id="difficulty">
                     @for (int i = 0; i < difficulties.Length; i++)
                     {
@@ -105,7 +105,7 @@
     </div>
 
     <!-- Right well -->
-    <div class="well col-sm-offset-1 col-sm-3">
+    <div class="well col-md-offset-1 col-xs-3">
         <h4 class="text-muted text-center">@Localization.continents</h4>
         <hr />
         <button id="select-all-btn-continents" class="btn btn-primary btn-fab btn-fab-mini" type="button"><img src="~/img/deselect-all.svg"></button>

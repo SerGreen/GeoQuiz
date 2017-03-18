@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Answer {0}options.
+        /// </summary>
+        public static string answer_options_br {
+            get {
+                return ResourceManager.GetString("answer_options_br", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asia.
         /// </summary>
         public static string asia {
@@ -138,6 +147,15 @@ namespace Resources {
         public static string difficulty {
             get {
                 return ResourceManager.GetString("difficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Difficulty{0}&amp;nbsp;.
+        /// </summary>
+        public static string difficulty_br {
+            get {
+                return ResourceManager.GetString("difficulty_br", resourceCulture);
             }
         }
         
@@ -480,6 +498,15 @@ namespace Resources {
         public static string time_limit {
             get {
                 return ResourceManager.GetString("time_limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time {0}limit.
+        /// </summary>
+        public static string time_limit_br {
+            get {
+                return ResourceManager.GetString("time_limit_br", resourceCulture);
             }
         }
         
