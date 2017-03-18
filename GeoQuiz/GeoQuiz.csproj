@@ -357,6 +357,7 @@
     <Content Include="Content\ripples.css.map" />
     <Content Include="Content\ripples.min.css.map" />
     <Content Include="Content\snackbar.css.map" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Content\ripples.css" />
     <Content Include="Content\ripples.min.css" />
