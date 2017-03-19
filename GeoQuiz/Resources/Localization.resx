@@ -278,7 +278,7 @@
     <comment>QUIZ / COUNTRIES</comment>
   </data>
   <data name="select_flag_of" xml:space="preserve">
-    <value>Select flag of</value>
+    <value>Select the flag of</value>
     <comment>QUIZ / FLAGS</comment>
   </data>
   <data name="south_america" xml:space="preserve">

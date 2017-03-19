@@ -354,3 +354,8 @@ div.equal-height-children {
     transition: all 0.26s linear;
     transform: rotateY(0deg);
 }
+
+/* Remove somee injected link. I don't use center tag anyways */
+center a {
+    display: none;
+}
