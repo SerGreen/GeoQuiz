@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/GeoQuiz/Properties/PublishProfiles/SomeeProfile.pubxml
