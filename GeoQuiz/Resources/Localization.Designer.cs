@@ -439,7 +439,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select flag of.
+        ///   Looks up a localized string similar to Select the flag of.
         /// </summary>
         public static string select_flag_of {
             get {
