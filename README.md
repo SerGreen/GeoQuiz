@@ -1,8 +1,12 @@
+## This repository is deprecated. See port to ASP.NET Core: [GeoQuizCore](https://github.com/SerGreen/GeoQuizCore).
+
+---
+
 # GeoQuiz
 Web app/game about countries of the world, their flags and capitals.  
 Made with ASP.NET MVC.
 
-Currently hosted on free hosting service: http://geoquiz.somee.com
+~~Currently hosted on free hosting service: http://geoquiz.somee.com~~
 
 Application supports localization and currently has English and Russian language.  
 UI is properly displayed for screen widths of 768 and higher. Maybe some day i will implement mobile devices support.
